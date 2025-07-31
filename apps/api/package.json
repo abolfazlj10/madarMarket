@@ -2,7 +2,7 @@
   "name": "api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "bun --watch src/index.ts"
+    "dev": "nodemon --watch src --watch ../../packages/db/src -e ts --exec 'bun src/index.ts'"
   },
   "dependencies": {
     "db": "workspace:*",

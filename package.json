@@ -1,9 +1,13 @@
 {
   "name": "madarMarket",
+  "packageManager" :"bun@1.1.18",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
+  "scripts": {
+    "dev" : "turbo run dev"
+  },
   "devDependencies": {
     "turbo": "^2.5.5"
   }

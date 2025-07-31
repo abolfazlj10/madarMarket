@@ -18,6 +18,9 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # TurboRep cache
 .turbo
 
+# Prisma
+packages/db/generated/
+
 # dotenv environment variable files
 .env
 .env.development.local

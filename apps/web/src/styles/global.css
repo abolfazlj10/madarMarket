@@ -1,14 +1,21 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default;
+}
 @import "./font.css";
 
 @theme inline{
     --color-secondary: #EAE8E8;
     --color-iconColor: #C0C0C0;
     --color-redBg: #C50F1F;
-    /* --text-iconSize: 20px; */
+    --color-darkText: #514F4D;
+    --color-underlineColor: #02B1EA;
+    --color-mainColor: #FF6A29;
+    --font-iranYekanX: iranYekanX;
 }
 
 body {
+    background-color: white;
     direction: rtl;
     font-family: PeydaWebFaNum;
 }

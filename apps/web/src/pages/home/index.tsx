@@ -1,7 +1,7 @@
 const Home = () => {
     return (
-        <div className="bg-blue-500 text-white">
-            home page
+        <div className="h-full flex justify-center items-center">
+            {/* home page */}
         </div>
     );
 }

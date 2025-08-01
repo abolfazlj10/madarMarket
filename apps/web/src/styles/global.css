@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "./font.css";
+
+@theme inline{
+    --color-secondary: #EAE8E8;
+    --color-iconColor: #C0C0C0;
+    --color-redBg: #C50F1F;
+    /* --text-iconSize: 20px; */
+}
+
+body {
+    direction: rtl;
+    font-family: PeydaWebFaNum;
+}

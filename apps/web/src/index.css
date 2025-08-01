@@ -2,5 +2,4 @@
 
 body {
     direction: rtl;
-    @apply h-screen max-w-screen-sm mx-auto;
 }

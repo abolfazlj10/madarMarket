@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
+import { motion } from "framer-motion";
 
 type Inputs = {
     phone: number
 }
 
+const formPhoneTransition = {
+    initial:{ opacity: 0, y: 20 },
+    animate:{ opacity: 1, y: 0 },
+    exit:{ opacity: 0, y: -20 },
+    transition:{ duration: 0.3, ease: "easeOut" as const }
+}
+
 const Login = () => {
-    const {register, handleSubmit, watch , formState: {errors, isValid}} = useForm<Inputs>()
+    const {register : registerPhone, handleSubmit : handleSubmitPhone, formState: {errors : errorsPhone, isValid : isValidPhone}} = useForm<Inputs>()
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         console.log(data)
         setShowOTP(true)
@@ -24,17 +32,23 @@ const Login = () => {
             </div>
             <div className="flex flex-col gap-4">
                 <div className="text-2xl font-medium">ورود</div>
-                <form className="flex flex-col gap-5" noValidate onSubmit={handleSubmit(onSubmit)}>
+                {!showOTP ?(
+                    <motion.form 
+                        {...formPhoneTransition}
+                        className="flex flex-col gap-5" 
+                        noValidate 
+                        onSubmit={handleSubmitPhone(onSubmit)}
+                    >
                     <div className="form-control w-full space-y-2">
                         <label className="label">
                             <span className="label-text text-sm">شماره موبایل خود را وارد کنید</span>
                         </label>
-                        <label className={`input input-bordered rounded-lg pr-0 flex items-center overflow-hidden focus-within:outline-0 gap-2 w-full ${errors.phone ? 'input-error' : isValid ? 'border-mainColor' : ''}`}>
-                            <div className={`h-full w-10 flex items-center justify-center bg-[#EDEDED] text-[#A3A3A3] border-l duration-300${isValid && ' border-mainColor'}`}>
+                        <label className={`input input-bordered rounded-lg pr-0 flex items-center overflow-hidden focus-within:outline-0 gap-2 w-full ${errorsPhone.phone ? 'input-error' : isValidPhone ? 'border-mainColor' : ''}`}>
+                            <div className={`h-full w-10 flex items-center justify-center bg-[#EDEDED] text-[#A3A3A3] border-l duration-300${isValidPhone && ' border-mainColor'}`}>
                                 <HiMiniDevicePhoneMobile />
                             </div>
                             <input
-                                {...register('phone',{
+                                {...registerPhone('phone',{
                                     required: 'شماره تماس الزامی‌ست',
                                     pattern: {
                                         value: /^09\d{9}$/,
@@ -49,8 +63,11 @@ const Login = () => {
                             />
                         </label>
                     </div>
-                    <button className={`btn !py-6 bg-mainColor/40 text-white rounded-lg border-0 duration-300 ${isValid && '!bg-mainColor'}`} type="submit">ادامه</button>
-                </form>
+                    <button className={`btn !py-6 bg-mainColor/40 text-white rounded-lg border-0 duration-300 ${isValidPhone && '!bg-mainColor'}`} type="submit">ادامه</button>
+                    </motion.form>
+                ):(
+                    <div>test</div>
+                )}
                 <div className="flex gap-1 text-xs">
                     ورود شما به معنای پذیرش 
                     <div className="underline text-underlineColor cursor-pointer"> شرایط خدمات و حریم خصوصی </div>

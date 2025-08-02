@@ -21,3 +21,28 @@ body {
     direction: rtl;
     font-family: PeydaWebFaNum;
 }
+
+/* Custom styles for special products swiper */
+.special-products-swiper {
+    direction: rtl;
+}
+
+.special-products-swiper .swiper-wrapper {
+    direction: rtl;
+}
+
+.special-products-swiper .swiper-slide {
+    direction: rtl;
+}
+
+/* RTL navigation buttons */
+.special-products-swiper .swiper-button-next {
+    right: auto;
+    left: 10px;
+}
+
+.special-products-swiper .swiper-button-prev {
+    left: auto;
+    right: 10px;
+}
+

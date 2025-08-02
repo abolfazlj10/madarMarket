@@ -1,4 +1,6 @@
 import SpecialProductsItem from "./specialProductItem"
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination } from 'swiper/modules'
 
 const SpecialProducts = () => {
     return(
@@ -7,14 +9,65 @@ const SpecialProducts = () => {
                 <div className="text-[#BA400B] font-bold text-xl">محصولات ویژه </div>
                 <div className="text-[#C15323] text-sm">بهترین پیشنهادات روز</div>
             </div>
-            <div className="flex gap-10">
-                <SpecialProductsItem />
-                <SpecialProductsItem />
+            
+            <div>
+                {/* First Swiper Section */}
+                <Swiper
+                    modules={[Navigation]}
+                    spaceBetween={5}
+                    slidesPerView={2}
+                    navigation={true}
+                    direction="horizontal"
+                    dir="rtl"
+                    className="special-products-swiper"
+                    style={{
+                        direction: 'rtl'
+                    }}
+                >
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                </Swiper>
             </div>
-            <div className="flex gap-10">
-                <SpecialProductsItem />
-                <SpecialProductsItem />
+
+            <div>
+                {/* Second Swiper Section */}
+                <Swiper
+                    modules={[Navigation]}
+                    spaceBetween={40}
+                    slidesPerView={2}
+                    navigation={true}
+                    direction="horizontal"
+                    dir="rtl"
+                    className="special-products-swiper"
+                    style={{
+                        direction: 'rtl'
+                    }}
+                >
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <SpecialProductsItem />
+                    </SwiperSlide>
+                </Swiper>
             </div>
+
             <img className="mt-3" src="icons/bannerbottom.png" />
         </div>
     )

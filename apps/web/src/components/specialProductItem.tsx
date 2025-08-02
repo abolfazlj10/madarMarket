@@ -13,7 +13,7 @@ const SpecialProductsItem = () => {
                     <div className="text-[#BA400B] text-xs">تومان</div>
                 </div>
             </div>
-            <div className="bg-[#F7F7F7] border border-[#F5F2EF] rounded-3xl text-center py-2 text-[#787471] cursor-pointer">افزودن به سبد</div>
+            <div className="bg-[#F7F7F7] border border-[#F5F2EF] rounded-3xl text-center py-2 text-[#787471] cursor-pointer" onClick={() => alert('test')}>افزودن به سبد</div>
         </div>
     )
 }

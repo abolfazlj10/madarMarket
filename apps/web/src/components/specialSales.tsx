@@ -1,6 +1,6 @@
 const SpecialSales = () => {
     return (
-        <div className="border bg-[#FDF2F6] border-[#FFCACA] w-full flex justify-between rounded-xl px-4 py-3">
+        <div className="border bg-[#FDF2F6] border-[#FFCACA] w-full flex justify-between rounded-xl px-4 py-3 mt-5">
             <div className="flex items-center gap-2">
                 <img src="icons/fireIcon.svg" />
                 <div className="text-[#DE030A] text-sm">

@@ -1,0 +1,219 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "لوازم تحریر",
+      "icon": "📚",
+      "subcategories": [
+        {
+          "id": 11,
+          "name": "دفترچه و کتاب",
+          "products": [
+            {"id": 101, "name": "دفتر ۱۰۰ برگ", "price": 25000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "ساعت",
+      "icon": "⏰",
+      "subcategories": [
+        {
+          "id": 21,
+          "name": "ساعت مچی",
+          "products": [
+            {"id": 201, "name": "ساعت دیجیتال", "price": 450000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "پکیج محرک",
+      "icon": "🧴",
+      "subcategories": [
+        {
+          "id": 31,
+          "name": "محرک پوست",
+          "products": [
+            {"id": 301, "name": "کرم مرطوب کننده", "price": 180000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "لوازم جانبی",
+      "icon": "🎧",
+      "subcategories": [
+        {
+          "id": 41,
+          "name": "هدفون",
+          "products": [
+            {"id": 401, "name": "هدفون بلوتوث", "price": 650000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "تنقلات",
+      "icon": "🍿",
+      "subcategories": [
+        {
+          "id": 51,
+          "name": "چیپس و تنقلات",
+          "products": [
+            {"id": 501, "name": "چیپس ذرت", "price": 35000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "کنسروه و آماده",
+      "icon": "🥫",
+      "subcategories": [
+        {
+          "id": 61,
+          "name": "کنسرو ماهی",
+          "products": [
+            {"id": 601, "name": "کنسرو تن ماهی", "price": 85000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "چاشنی شیرینی",
+      "icon": "🍫",
+      "subcategories": [
+        {
+          "id": 71,
+          "name": "شکلات",
+          "products": [
+            {"id": 701, "name": "شکلات تلخ", "price": 120000}
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "آقوردون ها",
+      "icon": "🍒",
+      "subcategories": [
+        {
+          "id": 81,
+          "name": "مربا و کمپوت",
+          "products": [
+            {"id": 801, "name": "مربای آلبالو", "price": 95000}
+          ]
+        }
+      ]
+    }
+  ],
+  "featured_products": [
+    {
+      "id": 1001,
+      "name": "روغن زیتون بکر کریستال ۵۰۰ لیتر",
+      "price": 31750000,
+      "original_price": 31750000,
+      "discount": 10,
+      "image": "olive_oil_crystal.jpg",
+      "category_id": 9,
+      "description": "روغن زیتون خالص و طبیعی",
+      "stock": 15,
+      "rating": 4.5,
+      "reviews_count": 23
+    },
+    {
+      "id": 1002,
+      "name": "کشک قره قوروق معتبر حمص ۵۰۰ گرم",
+      "price": 31750000,
+      "original_price": 31750000,
+      "discount": 20,
+      "image": "kashk_dried_whey.jpg",
+      "category_id": 10,
+      "description": "کشک سنتی و خوشمزه",
+      "stock": 8,
+      "rating": 4.8,
+      "reviews_count": 15
+    },
+    {
+      "id": 1003,
+      "name": "پنیر فتا هنجار مقدار ۴۰۰ گرم",
+      "price": 300000,
+      "original_price": 350000,
+      "discount": 14,
+      "image": "feta_cheese.jpg",
+      "category_id": 11,
+      "description": "پنیر فتا تازه و خوشمزه مناسب برای صبحانه",
+      "stock": 25,
+      "rating": 4.2,
+      "reviews_count": 67,
+      "specifications": {
+        "وزن": "۴۰۰ گرم",
+        "برند": "هنجار",
+        "نوع بسته‌بندی": "ظرف پلاستیکی",
+        "مدت انقضا": "۳ ماه"
+      }
+    }
+  ],
+  "special_offers": [
+    {
+      "id": 2001,
+      "title": "تخفیف ویژه محصولات لبنی",
+      "description": "تا ۳۰٪ تخفیف روی همه محصولات لبنی",
+      "discount_percentage": 30,
+      "valid_until": "2025-08-15",
+      "applicable_categories": [11, 12]
+    }
+  ],
+  "brands": [
+    {
+      "id": 1,
+      "name": "کریستال",
+      "logo": "crystal_logo.png",
+      "description": "تولیدکننده روغن‌های طبیعی"
+    },
+    {
+      "id": 2,
+      "name": "هنجار",
+      "logo": "hanjar_logo.png",
+      "description": "محصولات لبنی سنتی"
+    }
+  ],
+  "filters": {
+    "price_ranges": [
+      {"min": 0, "max": 50000, "label": "کمتر از ۵۰ هزار تومان"},
+      {"min": 50000, "max": 200000, "label": "۵۰ تا ۲۰۰ هزار تومان"},
+      {"min": 200000, "max": 500000, "label": "۲۰۰ تا ۵۰۰ هزار تومان"},
+      {"min": 500000, "max": null, "label": "بالای ۵۰۰ هزار تومان"}
+    ],
+    "availability": [
+      {"value": "in_stock", "label": "موجود در انبار"},
+      {"value": "out_of_stock", "label": "ناموجود"}
+    ],
+    "sort_options": [
+      {"value": "newest", "label": "جدیدترین"},
+      {"value": "price_low_high", "label": "قیمت: کم به زیاد"},
+      {"value": "price_high_low", "label": "قیمت: زیاد به کم"},
+      {"value": "popular", "label": "محبوب‌ترین"},
+      {"value": "rating", "label": "امتیاز"}
+    ]
+  },
+  "cart": {
+    "items": [],
+    "total_items": 0,
+    "total_price": 0,
+    "shipping_cost": 25000,
+    "free_shipping_threshold": 500000
+  },
+  "user_settings": {
+    "currency": "تومان",
+    "language": "fa",
+    "notifications": true,
+    "theme": "light"
+  }
+}

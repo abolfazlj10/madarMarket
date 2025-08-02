@@ -30,13 +30,13 @@ const SwiperBanner = () => {
                 className="mySwiper h-32 border-2 border-white shadow-xl rounded-xl"
             >
                 <SwiperSlide>
-                    <div className="w-full h-full bg-gradient-to-r from-[#C36EFF] to-[#FF6A75] rounded-lg"></div>
+                    <img src="/icons/slider.png" className='object-cover' />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className="w-full h-full bg-gradient-to-r from-[#C36EFF] to-[#FF6A75] rounded-lg"></div>
+                    <img src="/icons/slider.png" className='object-cover' />
                 </SwiperSlide>
                 <SwiperSlide>
-                    <div className="w-full h-full bg-gradient-to-r from-[#C36EFF] to-[#FF6A75] rounded-lg"></div>
+                    <img src="/icons/slider.png" className='object-cover' />
                 </SwiperSlide>
             </Swiper>
             

@@ -1,6 +1,7 @@
 import SpecialProductsItem from "./specialProductItem"
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination } from 'swiper/modules'
+import { Navigation } from 'swiper/modules'
+import data from "../data.json"
 
 const SpecialProducts = () => {
     return(
@@ -24,18 +25,11 @@ const SpecialProducts = () => {
                         direction: 'rtl'
                     }}
                 >
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
+                    {data.featured_products.map((product, index) =>(    
+                        <SwiperSlide key={index}>
+                            <SpecialProductsItem product={product} />
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
             </div>
 
@@ -53,18 +47,11 @@ const SpecialProducts = () => {
                         direction: 'rtl'
                     }}
                 >
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <SpecialProductsItem />
-                    </SwiperSlide>
+                    {data.featured_products.map((product, index) =>(
+                        <SwiperSlide key={index}>
+                            <SpecialProductsItem product={product} />
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
             </div>
 

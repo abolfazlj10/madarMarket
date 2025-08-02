@@ -3,6 +3,7 @@ import Home from './pages/home';
 import Login from './pages/login';
 import Header from './components/header';
 import Navbar from './components/navbar';
+import PLP from './pages/plp';
 
 function AppContent() {
   const location = useLocation();
@@ -14,6 +15,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/product/:id/:title" element={<PLP />} />
       </Routes>
       {!isLoginPage && <Navbar />}
     </div>

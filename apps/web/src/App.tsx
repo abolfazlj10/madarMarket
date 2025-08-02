@@ -7,7 +7,7 @@ import Navbar from './components/navbar';
 function App() {
   return (
     <Router>
-      <div className='max-w-screen-sm mx-auto h-screen relative flex flex-col'>
+      <div className='max-w-screen-sm mx-auto h-screen relative flex flex-col max-h-screen'>
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

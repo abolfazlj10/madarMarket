@@ -1,7 +1,9 @@
+import Search from "../../components/search";
+
 const Home = () => {
     return (
-        <div className="h-full flex justify-center items-center">
-            {/* home page */}
+        <div className="h-full">
+            <Search />
         </div>
     );
 }

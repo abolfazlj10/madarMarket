@@ -3,6 +3,8 @@
     themes: light --default;
 }
 @import "./font.css";
+@import 'swiper/css';
+@import 'swiper/css/pagination';
 
 @theme inline{
     --color-secondary: #EAE8E8;

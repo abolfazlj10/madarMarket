@@ -29,7 +29,7 @@ const animateHandsSVG = {
 
 const Login = () => {
     const [otp, setOtp] = useState<string | undefined>('')
-    const [showOTP, setShowOTP] = useState<boolean>(true)
+    const [showOTP, setShowOTP] = useState<boolean>(false)
 
     const [timeLeft, setTimeLeft] = useState<number>(120)
     const [canResend, setCanResend] = useState<boolean>(false)
@@ -99,7 +99,7 @@ const Login = () => {
     }
 
     return (
-        <div className="flex-1 grid grid-rows-[fr_1fr_1fr] justify-around px-20 font-iranYekanX text-darkText max-h-screen h-screen">
+        <div className="flex-1 grid grid-rows-[fr_1fr_1fr] justify-around font-iranYekanX text-darkText max-h-screen h-screen">
             <div className="flex justify-center items-center">
                 <div className="space-y-2">
                     <img src="/logo/madarLoginLogo.svg" alt="logo" className="mx-auto" />

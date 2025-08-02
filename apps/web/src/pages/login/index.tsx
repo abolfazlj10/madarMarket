@@ -8,24 +8,21 @@ type InputsPhone = {
     phone: number
 }
 type InputsOTP = {
-    otp1: number
-    otp2: number
-    otp3: number
-    otp4: number
+    otp: string
 }
 
-const formPhoneTransition = {
-    initial:{ opacity: 1, y: 0 },
-    animate:{ opacity: 1, y: 0 },
-    exit:{ opacity: 0, x: -20 },
-    transition:{ duration: 0.5, ease: "easeOut" as const }
+const formTransition = {
+    initial:{ opacity: 0, y: 20, scale: 0.98 },
+    animate:{ opacity: 1, y: 0, scale: 1 },
+    exit:{ opacity: 0, y: -10, scale: 0.98 },
+    transition:{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const }
 }
 
 const animateHandsSVG = {
-    initial:{ opacity: 0, y: 200 },
+    initial:{ opacity: 0, y: 300, },
     animate:{ opacity: 1, y: 0 },
-    exit:{ opacity: 0, y: 200 },
-    transition:{ duration: 0.5, ease: "easeOut" as const }
+    exit:{ opacity: 0, y: 300,},
+    transition:{ duration: 0.7, ease: 'easeOut' as const }
 }
 
 const Login = () => {
@@ -38,14 +35,37 @@ const Login = () => {
         setShowOTP(true)
     }
 
-    const {register : registerOTP, handleSubmit : handleSubmitOTP, formState: {errors : errorsOTP, isValid : isValidOTP}} = useForm<InputsOTP>()
-    const onSubmitOTP: SubmitHandler<InputsOTP>  = (data) => {
+    const {
+        register: registerOTP,handleSubmit: handleSubmitOTP, setValue, trigger, watch: watchOTP, formState: { errors: errorsOTP, isValid: isValidOTP },} = useForm<InputsOTP>({ 
+            mode: "onChange", 
+            defaultValues: { otp: "" },
+            resolver: (values) => {
+                const errors: any = {};
+                if (!values.otp || values.otp.length < 4) {
+                    errors.otp = {
+                        type: "required",
+                        message: "کد OTP باید 4 رقم باشد"
+                    };
+                }
+                return {
+                    values,
+                    errors
+                };
+            }
+        });
+      
+      useEffect(() => {
+        setValue("otp", otp || "");
+        trigger("otp");
+      }, [otp, setValue, trigger]);    
+      
+      const onSubmitOTP: SubmitHandler<InputsOTP>  = (data) => {
         console.log(data)
-        setShowOTP(false)
+        console.log('yeah here')
     }
     
     return (
-        <div className="flex-1 grid justify-around px-20 font-iranYekanX text-darkText max-h-screen">
+        <div className="flex-1 grid grid-rows-3 justify-around px-20 font-iranYekanX text-darkText max-h-screen">
             <div className="flex justify-center items-center pt-14">
                 <div className="space-y-2">
                     <img src="/logo/madarLoginLogo.svg" alt="logo" className="mx-auto" />
@@ -54,11 +74,11 @@ const Login = () => {
             </div>
             <div className="flex flex-col gap-4">
                 <div className="text-2xl font-medium">ورود</div>
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                     {!showOTP ?(
                         <motion.form 
-                            key="phone-form"
-                            {...formPhoneTransition}
+                             key="phone-form"
+                             {...formTransition}
                             className="flex flex-col gap-5" 
                             noValidate 
                             autoComplete="off"
@@ -88,53 +108,67 @@ const Login = () => {
                                 />
                             </label>
                         </div>
-                        <button className={`btn !py-6 bg-mainColor/40 text-white rounded-xl border-0 duration-300 ${isValidPhone && '!bg-mainColor'}`} type="submit">ادامه</button>
+                        <button className={`btn !py-6 text-white rounded-xl border-0 duration-300 ${isValidPhone ? '!bg-mainColor' : '!bg-[#FF6A29]/40'}`} type="submit">ادامه</button>
                         </motion.form>
                     ):(
-                        <motion.form 
+                        <motion.form
                             key="otp-form"
-                            {...formPhoneTransition}
-                            className="flex flex-col gap-5" 
-                            noValidate 
-                            onSubmit={handleSubmitPhone(onSubmitOTP)}
-                        >
+                            {...formTransition}
+                            className="flex flex-col gap-5"
+                            noValidate
+                            onSubmit={handleSubmitOTP(onSubmitOTP)}
+                            >
                             <div className="form-control w-full space-y-2">
                                 <label className="label">
-                                    <span className="label-text text-sm">کد ارسال شده به شماره موبایل {watch("phone")} را وارد کنید</span>
+                                <span className="label-text text-sm">
+                                    کد ارسال شده به شماره موبایل {watch("phone")} را وارد کنید
+                                </span>
                                 </label>
                                 <label dir="ltr" className="input-bordered">
-                                    <OTPInput
-                                        value={otp}
-                                        onChange={setOtp}
-                                        numInputs={4}
-                                        shouldAutoFocus
-                                        skipDefaultStyles
-                                        containerStyle={`flex gap-10`}
-                                        renderInput={(props) =>
-                                            <input {...props} {...registerOTP(`otp1`)} className="input h-15 rounded-lg text-center" />}
-                                    />
+                                <OTPInput
+                                    value={otp}
+                                    onChange={setOtp}
+                                    numInputs={4}
+                                    shouldAutoFocus
+                                    skipDefaultStyles
+                                    containerStyle={`flex gap-10`}
+                                    inputStyle="input h-15 rounded-lg text-center"
+                                    renderInput={(props) =>
+                                        <input {...props} className={`input h-15 rounded-xl text-center focus-within:outline-none focus:border-mainColor ${props.value ? 'border-black' : ''}`} />}
+                                />
                                 </label>
+
                             </div>
-                            <button className={`btn !py-6 bg-mainColor/40 text-white rounded-xl border-0 duration-300 ${isValidPhone && '!bg-mainColor'}`} type="submit">ادامه</button>
+
+                            <button
+                                className={`btn !py-6 text-white rounded-xl border-0 duration-300 ${
+                                isValidOTP && otp && otp.length === 4 
+                                    ? "!bg-mainColor" 
+                                    : "!bg-mainColor/40"
+                                }`}
+                                type="submit"
+                                disabled={!isValidOTP || !otp || otp.length < 4}
+                            >
+                                ادامه
+                            </button>
                         </motion.form>
                     )}
                 </AnimatePresence>
                 <div className="flex gap-1 text-xs">
                     ورود شما به معنای پذیرش 
-                    <div onClick={() => setShowOTP(!showOTP)} className="underline text-underlineColor cursor-pointer"> شرایط خدمات و حریم خصوصی </div>
+                    <div className="underline text-underlineColor cursor-pointer"> شرایط خدمات و حریم خصوصی </div>
                     است
                 </div>
             </div>
             <div className="mt-auto relative overflow-hidden">
-                 <AnimatePresence mode="wait">
-                 {!showOTP ?
-                  <motion.img key="handsLogin" {...animateHandsSVG} src="/icons/handsLogin.svg" alt="hands image" /> 
-                  : 
-                  <motion.img key="otpHands" {...animateHandsSVG} src="/icons/otpHands.svg" alt="hands image" />}        
-
+                 <AnimatePresence mode="wait" initial={false}>
+                    {!showOTP ?
+                    <motion.img key="handsLogin" {...animateHandsSVG} src="/icons/handsLogin.svg" alt="hands image" /> 
+                    : 
+                    <motion.img key="otpHands" {...animateHandsSVG} src="/icons/otpHands.svg" className="mx-auto duration-100" alt="hands image" />}        
                  </AnimatePresence>
-                <img src="/icons/blur.svg" className="absolute top-0" alt="hands image" />        
-                <img src="/icons/blur2.svg" className="absolute top-0" alt="hands image" />        
+                <img src="/icons/blur.svg" className="absolute top-0 right-0" alt="hands image" />        
+                <img src="/icons/blur2.svg" className="absolute top-0 left-0" alt="hands image" />        
             </div>
         </div>
     );

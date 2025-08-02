@@ -14,7 +14,7 @@ const SpecialProducts = () => {
                 {/* First Swiper Section */}
                 <Swiper
                     modules={[Navigation]}
-                    spaceBetween={5}
+                    spaceBetween={40}
                     slidesPerView={2}
                     navigation={true}
                     direction="horizontal"

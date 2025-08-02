@@ -1,20 +1,29 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/login';
 import Header from './components/header';
 import Navbar from './components/navbar';
 
+function AppContent() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
+
+  return (
+    <div className='max-w-[400px] mx-auto h-screen relative flex flex-col max-h-screen'>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      {!isLoginPage && <Navbar />}
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <div className='max-w-[400px] mx-auto h-screen relative flex flex-col max-h-screen'>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-        <Navbar />
-      </div>
+      <AppContent />
     </Router>
   );
 }

@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
-import { useState, useRef } from 'react';
-
+import { Pagination, Autoplay } from 'swiper/modules';
+import { useState, useRef, useEffect } from 'react';
 
 const SwiperBanner = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -13,13 +12,21 @@ const SwiperBanner = () => {
             swiperRef.current.swiper.slideTo(index);
         }
     };
+
     return(
         <div className='relative'>
             <Swiper
                 ref={swiperRef}
                 spaceBetween={10}
                 onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-                modules={[Pagination]}
+                modules={[Pagination, Autoplay]}
+                autoplay={{
+                    delay: 5000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                    waitForTransition: true
+                }}
+                loop={true}
                 className="mySwiper h-32 border-2 border-white shadow-xl rounded-xl"
             >
                 <SwiperSlide>

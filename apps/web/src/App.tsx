@@ -15,7 +15,7 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/product/:id/:title" element={<PLP />} />
+        <Route path="/product/:id" element={<PLP />} />
       </Routes>
       {!isLoginPage && <Navbar />}
     </div>

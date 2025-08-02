@@ -1,5 +1,6 @@
 
 import CategoryList from "../../components/categoryList";
+import PlpFilter from "../../components/plpFilter";
 import Tags from "../../components/tags";
 
 const PLP = () => { 
@@ -7,6 +8,7 @@ const PLP = () => {
         <div className="space-y-3">
             <CategoryList />
             <Tags />
+            <PlpFilter />
         </div>
     ) }
 export default PLP;

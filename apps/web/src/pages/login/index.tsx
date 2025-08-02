@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { HiMiniDevicePhoneMobile } from "react-icons/hi2";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, animate } from "framer-motion";
+import OTPInput from "react-otp-input";
 
 type InputsPhone = {
     phone: number
@@ -17,16 +18,25 @@ const formPhoneTransition = {
     initial:{ opacity: 1, y: 0 },
     animate:{ opacity: 1, y: 0 },
     exit:{ opacity: 0, x: -20 },
-    transition:{ duration: 0.3, ease: "easeOut" as const }
+    transition:{ duration: 0.5, ease: "easeOut" as const }
+}
+
+const animateHandsSVG = {
+    initial:{ opacity: 0, y: 200 },
+    animate:{ opacity: 1, y: 0 },
+    exit:{ opacity: 0, y: 200 },
+    transition:{ duration: 0.5, ease: "easeOut" as const }
 }
 
 const Login = () => {
+    const [otp, setOtp] = useState<string | undefined>('')
+    const [showOTP,setShowOTP] = useState<boolean>(false)
+    
     const {register : registerPhone, handleSubmit : handleSubmitPhone, watch , formState: {errors : errorsPhone, isValid : isValidPhone}} = useForm<InputsPhone>()
     const onSubmitPhone: SubmitHandler<InputsPhone> = (data) => {
         console.log(data)
         setShowOTP(true)
     }
-    const [showOTP,setShowOTP] = useState<boolean>(false)
 
     const {register : registerOTP, handleSubmit : handleSubmitOTP, formState: {errors : errorsOTP, isValid : isValidOTP}} = useForm<InputsOTP>()
     const onSubmitOTP: SubmitHandler<InputsOTP>  = (data) => {
@@ -35,7 +45,7 @@ const Login = () => {
     }
     
     return (
-        <div className="flex-1 grid justify-around font-iranYekanX text-darkText max-h-screen">
+        <div className="flex-1 grid justify-around px-20 font-iranYekanX text-darkText max-h-screen">
             <div className="flex justify-center items-center pt-14">
                 <div className="space-y-2">
                     <img src="/logo/madarLoginLogo.svg" alt="logo" className="mx-auto" />
@@ -51,6 +61,7 @@ const Login = () => {
                             {...formPhoneTransition}
                             className="flex flex-col gap-5" 
                             noValidate 
+                            autoComplete="off"
                             onSubmit={handleSubmitPhone(onSubmitPhone)}
                         >
                         <div className="form-control w-full space-y-2">
@@ -77,7 +88,7 @@ const Login = () => {
                                 />
                             </label>
                         </div>
-                        <button className={`btn !py-6 bg-mainColor/40 text-white rounded-lg border-0 duration-300 ${isValidPhone && '!bg-mainColor'}`} type="submit">ادامه</button>
+                        <button className={`btn !py-6 bg-mainColor/40 text-white rounded-xl border-0 duration-300 ${isValidPhone && '!bg-mainColor'}`} type="submit">ادامه</button>
                         </motion.form>
                     ):(
                         <motion.form 
@@ -85,33 +96,43 @@ const Login = () => {
                             {...formPhoneTransition}
                             className="flex flex-col gap-5" 
                             noValidate 
-                            onSubmit={handleSubmitOTP(onSubmitOTP)}
+                            onSubmit={handleSubmitPhone(onSubmitOTP)}
                         >
                             <div className="form-control w-full space-y-2">
                                 <label className="label">
-                                    <span className="label-text text-sm flex gap-1 justify-center">
-                                        کد ارسال شده به شماره موبایل  <span>{ watch("phone") }</span> را وارد کنید  
-                                    </span>
+                                    <span className="label-text text-sm">کد ارسال شده به شماره موبایل {watch("phone")} را وارد کنید</span>
                                 </label>
-                                <div className="flex justify-around">
-                                    <input type="code" maxLength={1} className="input input-bordered w-2/12 h-15 rounded-xl text-center text-xl" />
-                                    <input type="code" maxLength={1} className="input input-bordered w-2/12 h-15 rounded-xl text-center text-xl" />
-                                    <input type="code" maxLength={1} className="input input-bordered w-2/12 h-15 rounded-xl text-center text-xl" />
-                                    <input type="code" maxLength={1} className="input input-bordered w-2/12 h-15 rounded-xl text-center text-xl" />
-                                </div>
+                                <label dir="ltr" className="input-bordered">
+                                    <OTPInput
+                                        value={otp}
+                                        onChange={setOtp}
+                                        numInputs={4}
+                                        shouldAutoFocus
+                                        skipDefaultStyles
+                                        containerStyle={`flex gap-10`}
+                                        renderInput={(props) =>
+                                            <input {...props} {...registerOTP(`otp1`)} className="input h-15 rounded-lg text-center" />}
+                                    />
+                                </label>
                             </div>
-                            <button className={`btn !py-6 bg-mainColor/40 text-white rounded-lg border-0 duration-300 ${isValidOTP && '!bg-mainColor'}`} type="submit">تایید</button>
+                            <button className={`btn !py-6 bg-mainColor/40 text-white rounded-xl border-0 duration-300 ${isValidPhone && '!bg-mainColor'}`} type="submit">ادامه</button>
                         </motion.form>
                     )}
                 </AnimatePresence>
                 <div className="flex gap-1 text-xs">
                     ورود شما به معنای پذیرش 
-                    <div className="underline text-underlineColor cursor-pointer"> شرایط خدمات و حریم خصوصی </div>
+                    <div onClick={() => setShowOTP(!showOTP)} className="underline text-underlineColor cursor-pointer"> شرایط خدمات و حریم خصوصی </div>
                     است
                 </div>
             </div>
             <div className="mt-auto relative overflow-hidden">
-                <img src="/icons/handsLogin.svg" alt="hands image" />        
+                 <AnimatePresence mode="wait">
+                 {!showOTP ?
+                  <motion.img key="handsLogin" {...animateHandsSVG} src="/icons/handsLogin.svg" alt="hands image" /> 
+                  : 
+                  <motion.img key="otpHands" {...animateHandsSVG} src="/icons/otpHands.svg" alt="hands image" />}        
+
+                 </AnimatePresence>
                 <img src="/icons/blur.svg" className="absolute top-0" alt="hands image" />        
                 <img src="/icons/blur2.svg" className="absolute top-0" alt="hands image" />        
             </div>

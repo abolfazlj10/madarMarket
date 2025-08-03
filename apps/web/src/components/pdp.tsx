@@ -11,9 +11,23 @@ interface PdpProps {
 const Pdp = ({ onClose }: PdpProps) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
-    const [isBasketExpanded, setIsBasketExpanded] = useState(false);
+    const [productCount, setProductCount] = useState(0);
     const totalSlides = 3; // تعداد اسلایدها
     const swiperRef = useRef<any>(null);
+
+    const handleIncreaseCount = () => {
+        setProductCount(prev => prev + 1);
+    };
+
+    const handleDecreaseCount = () => {
+        setProductCount(prev => Math.max(0, prev - 1));
+    };
+
+    const handleAddToBasket = () => {
+        if (productCount === 0) {
+            handleIncreaseCount();
+        }
+    };
 
     const handlePaginationClick = (index: number) => {
         if (swiperRef.current && swiperRef.current.swiper) {
@@ -131,17 +145,35 @@ const Pdp = ({ onClose }: PdpProps) => {
                     </div>
                     <div className="flex">
                         <div 
-                            className="flex-2 bg-mainColor text-white rounded-xl py-3 text-center cursor-pointer flex items-center justify-center gap-2"
-                            onClick={() => setIsBasketExpanded(!isBasketExpanded)}
+                            className={`flex-2 ${productCount ? 'bg-white border border-mainColor' : 'bg-mainColor'}  text-white rounded-xl py-3 text-center cursor-pointer flex items-center justify-center gap-2`}
+                            onClick={handleAddToBasket}
                         >
-                            {isBasketExpanded ? (
-                                <>
-                                    <span>افزودن به سبد خرید</span>
-                                    <span className="text-xs">(1 محصول)</span>
-                                    <RiShoppingBasket2Line className="text-lg" />
-                                </>
+                            {productCount > 0 ? (
+                                <div className="flex gap-4 items-center">
+                                    <div className="flex-1">
+                                        <img 
+                                            src="/icons/plus.svg" 
+                                            className="w-6 cursor-pointer duration-200 hover:scale-110" 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleIncreaseCount();
+                                            }} 
+                                        />
+                                    </div>
+                                    <div className="flex-1 text-mainColor flex items-center justify-center text-lg">{productCount}</div>
+                                    <div className="flex-1">
+                                        <img 
+                                            src="/icons/trash.svg" 
+                                            className="w-6 cursor-pointer duration-200 hover:scale-110" 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDecreaseCount();
+                                            }} 
+                                        />
+                                    </div>
+                                </div>
                             ) : (
-                                <RiShoppingBasket2Line className="text-2xl" />
+                                'افزودن به سبد خرید'
                             )}
                         </div>
                         <div className="flex-1 flex flex-col items-end justify-around">

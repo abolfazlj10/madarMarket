@@ -2,15 +2,29 @@ import { BiCart } from "react-icons/bi";
 import { CiDiscount1 } from "react-icons/ci";
 import { IoIosArrowUp } from "react-icons/io";
 import { TbArrowsExchange2 } from "react-icons/tb";
+import { useState } from "react";
 
 const PlpFilter = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     return(
         <div className="flex justify-between">
             <div>
-                <button className="flex items-center gap-1 border border-secondary rounded-lg py-1 px-2 text-[#787471] cursor-pointer" popoverTarget="popover-1" style={{ anchorName: "--anchor-1" }}><TbArrowsExchange2 className="rotate-90" />مرتب سازی <IoIosArrowUp /></button>
+                <button 
+                    className="flex items-center gap-1 border border-secondary rounded-lg py-1 px-2 text-[#787471] cursor-pointer" 
+                    popoverTarget="popover-1" 
+                    style={{ anchorName: "--anchor-1" } as any}
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    <TbArrowsExchange2 className="rotate-90" />
+                    مرتب سازی 
+                    <IoIosArrowUp className={`transition-transform duration-300 ${isMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
 
                 <ul className="dropdown w-32 menu rounded-box bg-base-100 shadow-sm space-y-1 shadow-xl"
-                    popover="auto" id="popover-1" style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */ }>
+                    popover="auto" 
+                    id="popover-1" 
+                    style={{ positionAnchor: "--anchor-1" } as any}
+                >
                     <div className="hover:bg-[#F7F7F7] py-2 pr-2 rounded duration-200 cursor-pointer">پرفروش ترین</div>
                     <div className="hover:bg-[#F7F7F7] py-2 pr-2 rounded duration-200 cursor-pointer">بیشترین تخفیف</div>
                     <div className="hover:bg-[#F7F7F7] py-2 pr-2 rounded duration-200 cursor-pointer">جدیدترین</div>

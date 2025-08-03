@@ -5,6 +5,7 @@ import PlpFilter from "../../components/plpFilter";
 import SpecialSales from "../../components/specialSales";
 import Tags from "../../components/tags";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 const showCategoey = false
 
@@ -76,7 +77,9 @@ const PLP = () => {
                     </div>
                 ))}
             </div>
-            {showPdp && <Pdp onClose={() => setShowPdp(false)} />}
+            <AnimatePresence>
+                {showPdp && <Pdp onClose={() => setShowPdp(false)} />}
+            </AnimatePresence>
         </div>
     ) }
 export default PLP;

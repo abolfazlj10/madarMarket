@@ -1,12 +1,16 @@
 
 import CategoryList from "../../components/categoryList";
+import Pdp from "../../components/pdp";
 import PlpFilter from "../../components/plpFilter";
 import SpecialSales from "../../components/specialSales";
 import Tags from "../../components/tags";
+import { useState } from "react";
 
 const showCategoey = false
 
-const PLP = () => { 
+const PLP = () => {
+    const [showPdp, setShowPdp] = useState(false); 
+    
     const ProudctItem = ({id}: {id: number}) => (
         <>
             <div>
@@ -26,11 +30,11 @@ const PLP = () => {
                     </div>
                 </div>
                     <div className="flex-1 flex items-center justify-end">
-                        <div className={`border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm ${id != 0 ? 'py-2 px-3 hover:bg-mainColor hover:text-white hover:shadow cursor-pointer' : 'pt-2 pb-1 px-2'} duration-200 rounded-full font-semibold`}>
-                            {id == 0 ? <div className="flex gap-4 items-center">
-                                <div className="flex-1"><img src="/icons/plus.svg" className="w-6 cursor-pointer duration-200 hover:scale-110" /></div>
+                        <div className={`border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm ${id != 0 ? 'py-2 px-3 hover:bg-mainColor hover:text-white hover:shadow cursor-pointer' : 'pt-2 pb-1 px-2'} duration-200 rounded-full font-semibold`} onClick={(e) => e.stopPropagation()}>
+                            {id == 0 ?                             <div className="flex gap-4 items-center">
+                                <div className="flex-1"><img src="/icons/plus.svg" className="w-6 cursor-pointer duration-200 hover:scale-110" onClick={(e) => e.stopPropagation()} /></div>
                                 <div className="flex-1 flex items-center justify-center text-lg">1</div>
-                                <div className="flex-1"><img src="/icons/trash.svg" className="w-6 cursor-pointer duration-200 hover:scale-110" /></div>
+                                <div className="flex-1"><img src="/icons/trash.svg" className="w-6 cursor-pointer duration-200 hover:scale-110" onClick={(e) => e.stopPropagation()} /></div>
                             </div> : 'افزودن به سبد'}
                         </div>
                     </div>
@@ -52,7 +56,7 @@ const PLP = () => {
             <PlpFilter />
             <div className="space-y-3">
                 {["","","","","","",""].map((item,idx)=>(
-                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
+                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'} cursor-pointer`} onClick={() => setShowPdp(true)}>
                         {idx == 0 || idx == 2 ? (
                             <>
                             <div className="flex px-2 pt-2 gap-4">
@@ -72,6 +76,7 @@ const PLP = () => {
                     </div>
                 ))}
             </div>
+            {showPdp && <Pdp onClose={() => setShowPdp(false)} />}
         </div>
     ) }
 export default PLP;

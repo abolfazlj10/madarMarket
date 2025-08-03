@@ -1,4 +1,5 @@
 import { MdClose } from "react-icons/md";
+import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import { useState, useRef } from 'react';
@@ -10,6 +11,7 @@ interface PdpProps {
 const Pdp = ({ onClose }: PdpProps) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isBasketExpanded, setIsBasketExpanded] = useState(false);
     const totalSlides = 3; // تعداد اسلایدها
     const swiperRef = useRef<any>(null);
 
@@ -128,7 +130,20 @@ const Pdp = ({ onClose }: PdpProps) => {
                         </div>
                     </div>
                     <div className="flex">
-                        <div className="flex-2 bg-mainColor text-white rounded-xl py-3 text-center cursor-pointer"> افزودن به سبد خرید </div>
+                        <div 
+                            className="flex-2 bg-mainColor text-white rounded-xl py-3 text-center cursor-pointer flex items-center justify-center gap-2"
+                            onClick={() => setIsBasketExpanded(!isBasketExpanded)}
+                        >
+                            {isBasketExpanded ? (
+                                <>
+                                    <span>افزودن به سبد خرید</span>
+                                    <span className="text-xs">(1 محصول)</span>
+                                    <RiShoppingBasket2Line className="text-lg" />
+                                </>
+                            ) : (
+                                <RiShoppingBasket2Line className="text-2xl" />
+                            )}
+                        </div>
                         <div className="flex-1 flex flex-col items-end justify-around">
                             <div className="text-[#787471] text-xs">قیمت کالا</div>
                             <div className="text-sm flex items-center gap-1 text-mainColor">
@@ -136,7 +151,7 @@ const Pdp = ({ onClose }: PdpProps) => {
                                 <span className="text-xs">تومان</span>
                             </div>
                         </div>
-            </div>
+                    </div>
         </div>
             </motion.div>
         </>

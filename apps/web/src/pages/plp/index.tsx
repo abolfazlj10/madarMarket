@@ -4,13 +4,51 @@ import Pdp from "../../components/pdp";
 import PlpFilter from "../../components/plpFilter";
 import SpecialSales from "../../components/specialSales";
 import Tags from "../../components/tags";
+import { RiShoppingBasket2Line } from "react-icons/ri";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
 const showCategoey = false
 
 const PLP = () => {
-    const [showPdp, setShowPdp] = useState(false); 
+    const [showPdp, setShowPdp] = useState(false);
+    const [expandedBaskets, setExpandedBaskets] = useState<{ [key: number]: boolean }>({});
+        const [productCounts, setProductCounts] = useState<{ [key: number]: number }>({});
+    
+    const handleIncreaseCount = (productId: number) => {
+        setProductCounts(prev => ({
+            ...prev,
+            [productId]: (prev[productId] || 0) + 1
+        }));
+        // اگر تعداد از 0 به 1 رسید، expanded را true کن
+        if (!productCounts[productId] || productCounts[productId] === 0) {
+            setExpandedBaskets(prev => ({
+                ...prev,
+                [productId]: true
+            }));
+        }
+    };
+
+    const handleDecreaseCount = (productId: number) => {
+        setProductCounts(prev => {
+            const newCount = Math.max(0, (prev[productId] || 0) - 1);
+            return {
+                ...prev,
+                [productId]: newCount
+            };
+        });
+        // اگر تعداد به 0 رسید، expanded را false کن
+        if (productCounts[productId] === 1) {
+            setExpandedBaskets(prev => ({
+                ...prev,
+                [productId]: false
+            }));
+        }
+    };
+
+    const handleAddToBasket = (productId: number) => {
+        handleIncreaseCount(productId);
+    };
     
     const ProudctItem = ({id}: {id: number}) => (
         <>
@@ -31,12 +69,42 @@ const PLP = () => {
                     </div>
                 </div>
                     <div className="flex-1 flex items-center justify-end">
-                        <div className={`border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm ${id != 0 ? 'py-2 px-3 hover:bg-mainColor hover:text-white hover:shadow cursor-pointer' : 'pt-2 pb-1 px-2'} duration-200 rounded-full font-semibold`} onClick={(e) => e.stopPropagation()}>
-                            {id == 0 ?                             <div className="flex gap-4 items-center">
-                                <div className="flex-1"><img src="/icons/plus.svg" className="w-6 cursor-pointer duration-200 hover:scale-110" onClick={(e) => e.stopPropagation()} /></div>
-                                <div className="flex-1 flex items-center justify-center text-lg">1</div>
-                                <div className="flex-1"><img src="/icons/trash.svg" className="w-6 cursor-pointer duration-200 hover:scale-110" onClick={(e) => e.stopPropagation()} /></div>
-                            </div> : 'افزودن به سبد'}
+                        <div 
+                            className="border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm py-2 px-3 hover:shadow cursor-pointer duration-200 rounded-full font-semibold flex items-center justify-center" 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (!productCounts[id] || productCounts[id] === 0) {
+                                    handleAddToBasket(id);
+                                }
+                            }}
+                        >
+                            {productCounts[id] && productCounts[id] > 0 ? (
+                                <div className="flex gap-4 items-center">
+                                    <div className="flex-1">
+                                        <img 
+                                            src="/icons/plus.svg" 
+                                            className="w-6 cursor-pointer duration-200 hover:scale-110" 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleIncreaseCount(id);
+                                            }} 
+                                        />
+                                    </div>
+                                    <div className="flex-1 flex items-center justify-center text-lg">{productCounts[id]}</div>
+                                    <div className="flex-1">
+                                        <img 
+                                            src="/icons/trash.svg" 
+                                            className="w-6 cursor-pointer duration-200 hover:scale-110" 
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDecreaseCount(id);
+                                            }} 
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                'افزودن به سبد'
+                            )}
                         </div>
                     </div>
                 </div>

@@ -14,11 +14,11 @@ const PLP = () => {
     
     const ProudctItem = ({id}: {id: number}) => (
         <>
-            <div>
+            <div className="cursor-pointer" onClick={() => setShowPdp(true)}>
                 <img src="/icons/cheese.png" />
             </div>
             <div className="flex-1 flex flex-col gap-3">
-                <div className="text-[#787471] text-sm flex-1">روغن زیتون بکر کریستال - 5 لیتر پنیر فتا دوشه هراز روغن زیتون بکر کریستال - 5 لیتر پنیر فتا دوشه هرا</div>
+                <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>روغن زیتون بکر کریستال - 5 لیتر پنیر فتا دوشه هراز روغن زیتون بکر کریستال - 5 لیتر پنیر فتا دوشه هرا</div>
                 <div className="flex items-center flex-1">
                 <div className="flex-1">
                     {id != 1 ? <div className="flex gap-2 items-center">
@@ -57,7 +57,7 @@ const PLP = () => {
             <PlpFilter />
             <div className="space-y-3">
                 {["","","","","","",""].map((item,idx)=>(
-                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'} cursor-pointer`} onClick={() => setShowPdp(true)}>
+                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
                         {idx == 0 || idx == 2 ? (
                             <>
                             <div className="flex px-2 pt-2 gap-4">

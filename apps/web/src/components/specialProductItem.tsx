@@ -1,7 +1,7 @@
 const SpecialProductsItem = ({product}: {product?: any}) => {
     return(
         <div className="border border-[#F5F2EF] rounded-b-3xl rounded-t-xl space-y-1 overflow-hidden w-[200px]">
-            <img src="icons/specialImag.png" className="mx-auto" />
+            <img src="/icons/specialImag.png" className="mx-auto" />
             <div className="px-2">{product.name}</div>
             <div className="px-2">
                 <div className="flex gap-2 items-center">

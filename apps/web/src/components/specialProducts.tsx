@@ -55,7 +55,7 @@ const SpecialProducts = () => {
                 </Swiper>
             </div>
 
-            <img className="mt-3" src="icons/bannerbottom.png" />
+            <img className="mt-3" src="/icons/bannerbottom.png" />
         </div>
     )
 }

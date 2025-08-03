@@ -32,7 +32,7 @@ const Header = () => {
                 {!shouldHideBasket && (
                     <div className="bg-white rounded-xl hover:bg-redBg cursor-pointer duration-300 text-white p-[1px] flex group/basket">
                         <div className="hidden flex-col px-3 group-hover/basket:flex duration-300">
-                            <span className="text-sm">مشاهده سبد</span>
+                            <span className="text-sm truncate">مشاهده سبد</span>
                             <span className="text-xs">1 محصول</span>
                         </div>
                         <div className="border border-secondary rounded-xl flex items-center p-3 bg-white flex-1">
@@ -49,5 +49,4 @@ const Header = () => {
         </div>
     );
 }
-
 export default Header;

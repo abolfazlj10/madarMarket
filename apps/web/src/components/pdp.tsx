@@ -12,7 +12,7 @@ const Pdp = ({ onClose }: PdpProps) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const totalSlides = 3; // تعداد اسلایدها
     const swiperRef = useRef<any>(null);
-    
+
     const handlePaginationClick = (index: number) => {
         if (swiperRef.current && swiperRef.current.swiper) {
             swiperRef.current.swiper.slideTo(index);
@@ -136,8 +136,8 @@ const Pdp = ({ onClose }: PdpProps) => {
                                 <span className="text-xs">تومان</span>
                             </div>
                         </div>
-                    </div>
-                </div>
+            </div>
+        </div>
             </motion.div>
         </>
     )

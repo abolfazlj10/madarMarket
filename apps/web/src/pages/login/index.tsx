@@ -14,7 +14,7 @@ type InputsOTP = {
 }
 
 const formTransition = {
-    initial:{ opacity: 0, y: 20, scale: 0.98 },
+    initial:{ opacity: 1, y: 20, scale: 0.98 },
     animate:{ opacity: 1, y: 0, scale: 1 },
     exit:{ opacity: 0, y: -10, scale: 0.98 },
     transition:{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const }
@@ -209,7 +209,7 @@ const Login = () => {
                 </div>
             </div>
             <div className="mt-auto relative overflow-hidden">
-                <AnimatePresence mode="wait" initial={false}>
+                <AnimatePresence mode="wait">
                     {!showOTP ?
                         <motion.img key="handsLogin" {...animateHandsSVG} src="/icons/handsLogin.svg" alt="hands image" />
                         :

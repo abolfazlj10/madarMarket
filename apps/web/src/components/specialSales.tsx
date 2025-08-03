@@ -7,6 +7,47 @@ const SpecialSales = () => {
         seconds: 0
     });
 
+    // Load timer from localStorage on component mount
+    useEffect(() => {
+        const savedTimer = localStorage.getItem('specialSalesTimer');
+        if (savedTimer) {
+            const { hours, minutes, seconds, endTime } = JSON.parse(savedTimer);
+            const now = Date.now();
+            const timeDiff = endTime - now;
+            
+            if (timeDiff > 0) {
+                // Timer is still running
+                const remainingHours = Math.floor(timeDiff / (1000 * 60 * 60));
+                const remainingMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const remainingSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                
+                setTimeLeft({
+                    hours: remainingHours,
+                    minutes: remainingMinutes,
+                    seconds: remainingSeconds
+                });
+            } else {
+                // Timer finished, reset to initial time
+                const initialTime = { hours: 23, minutes: 0, seconds: 0 };
+                const endTime = now + (23 * 60 * 60 * 1000); // 23 hours from now
+                localStorage.setItem('specialSalesTimer', JSON.stringify({
+                    ...initialTime,
+                    endTime
+                }));
+                setTimeLeft(initialTime);
+            }
+        } else {
+            // First time, set initial timer
+            const initialTime = { hours: 23, minutes: 0, seconds: 0 };
+            const endTime = Date.now() + (23 * 60 * 60 * 1000); // 23 hours from now
+            localStorage.setItem('specialSalesTimer', JSON.stringify({
+                ...initialTime,
+                endTime
+            }));
+            setTimeLeft(initialTime);
+        }
+    }, []);
+
     useEffect(() => {
         const timer = setInterval(() => {
             setTimeLeft(prevTime => {
@@ -23,11 +64,23 @@ const SpecialSales = () => {
                         if (hours > 0) {
                             hours--;
                         } else {
-                            // Timer finished
-                            return { hours: 0, minutes: 0, seconds: 0 };
+                            // Timer finished, reset to initial time
+                            const initialTime = { hours: 23, minutes: 0, seconds: 0 };
+                            const endTime = Date.now() + (23 * 60 * 60 * 1000);
+                            localStorage.setItem('specialSalesTimer', JSON.stringify({
+                                ...initialTime,
+                                endTime
+                            }));
+                            return initialTime;
                         }
                     }
                 }
+                
+                // Save current time to localStorage
+                const endTime = Date.now() + (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
+                localStorage.setItem('specialSalesTimer', JSON.stringify({
+                    hours, minutes, seconds, endTime
+                }));
                 
                 return { hours, minutes, seconds };
             });

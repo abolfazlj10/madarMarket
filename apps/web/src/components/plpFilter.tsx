@@ -9,7 +9,7 @@ const PlpFilter = () => {
             <div>
                 <button className="flex items-center gap-1 border border-secondary rounded-lg py-1 px-2 text-[#787471] cursor-pointer" popoverTarget="popover-1" style={{ anchorName: "--anchor-1" }}><TbArrowsExchange2 className="rotate-90" />مرتب سازی <IoIosArrowUp /></button>
 
-                <ul className="dropdown w-32 menu rounded-box bg-base-100 shadow-sm space-y-1"
+                <ul className="dropdown w-32 menu rounded-box bg-base-100 shadow-sm space-y-1 shadow-xl"
                     popover="auto" id="popover-1" style={{ positionAnchor: "--anchor-1" } /* as React.CSSProperties */ }>
                     <div className="hover:bg-[#F7F7F7] py-2 pr-2 rounded duration-200 cursor-pointer">پرفروش ترین</div>
                     <div className="hover:bg-[#F7F7F7] py-2 pr-2 rounded duration-200 cursor-pointer">بیشترین تخفیف</div>

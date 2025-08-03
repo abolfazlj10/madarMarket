@@ -43,12 +43,12 @@ const SpecialSales = () => {
     return (
         <div className="border bg-[#FDF2F6] border-[#FFCACA] w-full flex justify-between rounded-xl px-4 py-3 mt-5">
             <div className="flex items-center gap-2">
-                <img src="icons/fireIcon.svg" />
+                <img src="/icons/fireIcon.svg" />
                 <div className="text-[#DE030A] text-sm">
                     <div>جشنواره فروش</div>
                     <div className="flex">
                         <div className="font-bold">ویـــــــــــژه!</div>
-                        <img src="icons/leftArrow.svg" />
+                        <img src="/icons/leftArrow.svg" />
                     </div>
                 </div>
             </div>

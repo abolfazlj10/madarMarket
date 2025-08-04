@@ -5,10 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RiEditBoxLine } from "react-icons/ri";
 import { TbClockHour5 } from "react-icons/tb";
 import OTPInput from "react-otp-input";
-import { useLogin } from "../../hooks/useLogin";
+import { useLogin, useVerify } from "../../hooks/useLogin";
+import toast from "react-hot-toast";
 
 type InputsPhone = {
-    phone: number
+    phone: string
 }
 type InputsOTP = {
     otp: string
@@ -60,13 +61,14 @@ const Login = () => {
         console.log("کد دوباره ارسال شد")
     }
     const { mutate } = useLogin()
-    const { register: registerPhone, handleSubmit: handleSubmitPhone, formState: { errors: errorsPhone, isValid: isValidPhone } } = useForm<InputsPhone>()
+    const { register: registerPhone, handleSubmit: handleSubmitPhone, watch: watchPhone, formState: { errors: errorsPhone, isValid: isValidPhone } } = useForm<InputsPhone>()
     const onSubmitPhone: SubmitHandler<InputsPhone> = (data) => {
-        console.log(data)
-        mutate('09397320584',{
+        mutate(data.phone.toString(),{
             onSuccess: (data) => {
+                toast.success(`کد ارسال شد ${data.otp}`, {
+                    duration: 5000,
+                })
                 console.log(data)
-                console.log('success')
                 setShowOTP(true)
                 setTimeLeft(120)
                 setCanResend(false)
@@ -74,9 +76,7 @@ const Login = () => {
         })
     }
 
-    const {
-        register: registerOTP, handleSubmit: handleSubmitOTP, setValue, trigger, watch, formState: { errors: errorsOTP, isValid: isValidOTP },
-    } = useForm<InputsOTP>({
+    const { register: registerOTP, handleSubmit: handleSubmitOTP, setValue, trigger,reset, watch, formState: { errors: errorsOTP, isValid: isValidOTP }} = useForm<InputsOTP>({
         mode: "onChange",
         defaultValues: { otp: "" },
         resolver: (values) => {
@@ -99,9 +99,18 @@ const Login = () => {
         trigger("otp");
     }, [otp, setValue, trigger]);
 
+    const { mutate: mutateVerify } = useVerify()
     const onSubmitOTP: SubmitHandler<InputsOTP>  = (data) => {
-        console.log(data)
-        console.log('yeah here')
+        mutateVerify({phone: watchPhone("phone") ,otp: data.otp}, {
+            onSuccess: (data) => {
+                if(data.success)
+                    toast.success('ورود با موفقیت انجام شد.')
+                else{
+                    setOtp('')
+                    toast.error('کد نامعتبر')
+                }
+            }
+        })
     }
 
     return (

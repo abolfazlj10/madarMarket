@@ -4,6 +4,7 @@ import Login from './pages/login';
 import Header from './components/header';
 import Navbar from './components/navbar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Toaster } from "react-hot-toast"
 import PLP from './pages/plp';
 
 const queryClient = new QueryClient()
@@ -31,6 +32,7 @@ function App() {
       <Router>
         <AppContent />
       </Router>
+      <Toaster />
     </QueryClientProvider>
   );
 }

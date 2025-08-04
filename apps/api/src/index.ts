@@ -9,20 +9,28 @@ const app = new Elysia()
     .get('/',()=>{
         return 'hello from server'
     })
+    .get('/users', async () => {
+        const users = await prisma.user.findMany()
+        return {
+            success: true,
+            message: 'Users fetched successfully',
+            users
+        }
+    })
     .post('/login', async (req) => {
         const body = await req.request.json()
-        const { phone } = body as { phone: string }      
+        const { phone } = body as { phone: string }  
         if (!phone) {
           return {
             success: false,
             message: 'Phone number is required',
           }
         }      
-        const otp = Math.floor(1000 + Math.random() * 9000).toString()        
+        const otp = Math.floor(1000 + Math.random() * 9000).toString()
+
         const existingUser = await prisma.user.findUnique({
-          where: { phone }
+          where: { phone: phone }
         })
-        
       
         if (existingUser) {
           await prisma.user.update({
@@ -46,6 +54,30 @@ const app = new Elysia()
           message: 'OTP sent',
           otp 
         }
+      })
+      .post('/verfiy', async (req) => {
+        const body = await req.request.json()
+        const { otp, phone } = body as {otp: string, phone: string}
+        console.log(otp)
+        
+        const userData = await prisma.user.findUnique({
+          where:{phone}
+        })
+
+        const otpTarget = userData?.otpCode
+        
+        if(otpTarget == otp){
+          return {
+            success : true,
+            message: 'verified code'
+          }
+        }else{
+          return {
+            success: false,
+            message: 'invalid code'
+          }
+        }
+        
       })
       
     .listen(3000)

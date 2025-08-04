@@ -1,6 +1,8 @@
 import { Elysia } from 'elysia';
-import { prisma } from 'db'
+import { PrismaClient } from '@prisma/client'
 import { cors } from '@elysiajs/cors'
+
+const prisma = new PrismaClient()
 
 const app = new Elysia()
     .use(cors())
@@ -8,57 +10,37 @@ const app = new Elysia()
         return 'hello from server'
     })
     .post('/login', async (req) => {
-      console.log('he came here.')
         const body = await req.request.json()
-        const { phone } = body
-
-        console.log(phone)
-      
+        const { phone } = body as { phone: string }      
         if (!phone) {
           return {
             success: false,
             message: 'Phone number is required',
           }
-        }
-      
-        const otp = Math.floor(1000 + Math.random() * 9000).toString()
-
-        console.log(otp)
-      
-        // چک می‌کنیم آیا کاربر با این شماره وجود داره یا نه
+        }      
+        const otp = Math.floor(1000 + Math.random() * 9000).toString()        
         const existingUser = await prisma.user.findUnique({
           where: { phone }
         })
-
-        await prisma.user.create({
-          data: {
-            phone,
-            otpCode: otp,
-            otpCreatedAt: new Date()
-          }
-        })
         
       
-        // if (existingUser) {
-        //   // بروزرسانی کد OTP برای کاربر موجود
-        //   await prisma.user.update({
-        //     where: { phone },
-        //     data: {
-        //       otpCode: otp,
-        //       otpCreatedAt: new Date()
-        //     }
-        //   })
-        // } else {
-        //   // ایجاد کاربر جدید همراه با OTP
-        //   await prisma.user.create({
-        //     data: {
-        //       phone,
-        //       otpCode: otp,
-        //       otpCreatedAt: new Date()
-        //     }
-        //   })
-        // }
-      
+        if (existingUser) {
+          await prisma.user.update({
+            where: { phone },
+            data: {
+              otpCode: otp,
+              updatedAt: new Date()
+            }
+          })
+        } else {
+          await prisma.user.create({
+            data: {
+              phone,
+              otpCode: otp,
+              otpCreatedAt: new Date()
+            }
+          })
+        }
         return {
           success: true,
           message: 'OTP sent',

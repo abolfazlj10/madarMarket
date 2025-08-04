@@ -3,7 +3,10 @@ import Home from './pages/home';
 import Login from './pages/login';
 import Header from './components/header';
 import Navbar from './components/navbar';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PLP from './pages/plp';
+
+const queryClient = new QueryClient()
 
 function AppContent() {
   const location = useLocation();
@@ -24,9 +27,11 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <AppContent />
+      </Router>
+    </QueryClientProvider>
   );
 }
 

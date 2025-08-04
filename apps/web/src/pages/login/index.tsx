@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { RiEditBoxLine } from "react-icons/ri";
 import { TbClockHour5 } from "react-icons/tb";
 import OTPInput from "react-otp-input";
+import { useLogin } from "../../hooks/useLogin";
 
 type InputsPhone = {
     phone: number
@@ -33,6 +34,7 @@ const Login = () => {
 
     const [timeLeft, setTimeLeft] = useState<number>(120)
     const [canResend, setCanResend] = useState<boolean>(false)
+  
 
     useEffect(() => {
         if (!showOTP) return;
@@ -57,15 +59,19 @@ const Login = () => {
         setCanResend(false)
         console.log("کد دوباره ارسال شد")
     }
-
-    const {
-        register: registerPhone, handleSubmit: handleSubmitPhone, formState: { errors: errorsPhone, isValid: isValidPhone }
-    } = useForm<InputsPhone>()
+    const { mutate } = useLogin()
+    const { register: registerPhone, handleSubmit: handleSubmitPhone, formState: { errors: errorsPhone, isValid: isValidPhone } } = useForm<InputsPhone>()
     const onSubmitPhone: SubmitHandler<InputsPhone> = (data) => {
         console.log(data)
-        setShowOTP(true)
-        setTimeLeft(120)
-        setCanResend(false)
+        mutate('09397320584',{
+            onSuccess: (data) => {
+                console.log(data)
+                console.log('success')
+                setShowOTP(true)
+                setTimeLeft(120)
+                setCanResend(false)
+            }
+        })
     }
 
     const {

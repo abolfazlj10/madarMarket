@@ -40,6 +40,11 @@ const app = new Elysia()
             users
         }
     })
+    .get('/categories', async () => {
+      const users = await prisma.category.findMany()
+      return users
+      
+    })
     .post('/login', async (req) => {
         const body = await req.request.json()
         const { phone } = body as { phone: string }  

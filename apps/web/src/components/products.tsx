@@ -10,9 +10,18 @@ const Products = () => {
                 <div className="text-[#C15323] text-sm">انتخاب سریع محصولات</div>
             </div>
             <div className="grid grid-cols-4 gap-x-3 gap-y-4">
-                {data?.map((category : categories, index: number) =>(
-                    <ProductItem key={index} id={category.id} title={category.name} image={category.image} />
-                ))}
+                {data ? (
+                    data?.map((category : categories, index: number) =>(
+                        <ProductItem key={index} id={category.id} title={category.name} image={category.image} />
+                    ))
+                ) : (
+                    ["","","","","","","","","","","","","","","",""].map((item,idx:number) => (
+                        <div key={idx} className="space-y-2">
+                            <div className="skeleton h-20"></div>
+                            <div className="skeleton h-4"></div>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     )

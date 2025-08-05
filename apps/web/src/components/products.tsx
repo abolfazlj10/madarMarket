@@ -9,10 +9,10 @@ const Products = () => {
             </div>
             <div className="grid grid-cols-4 gap-x-3 gap-y-4">
                 {data.categories.map((category, index) =>(
-                    <ProductItem id={index + 1} title={category.name} />
+                    <ProductItem key={index} id={index + 1} title={category.name} />
                 ))}
                 {data.categories.map((category, index) =>(
-                    <ProductItem id={index + 1} title={category.name} />
+                    <ProductItem key={index} id={index + 1} title={category.name} />
                 ))}
             </div>
         </div>

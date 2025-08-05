@@ -2,7 +2,7 @@ import ProductItem from "./productItem"
 import type { categories } from "../types/type"
 import { useGetCategories } from "../hooks/useCategory"
 const Products = () => {
-    const { data, isLoading, isError } = useGetCategories();
+    const { data } = useGetCategories();
     return (
         <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">

@@ -8,7 +8,7 @@ import { RiShoppingBasket2Line } from "react-icons/ri";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
-const showCategoey = false
+const showCategoey = true
 
 const PLP = () => {
     const [showPdp, setShowPdp] = useState(false);

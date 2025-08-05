@@ -5,6 +5,28 @@ import jwt from 'jsonwebtoken'
 
 const prisma = new PrismaClient()
 
+const authenticate = async (req: Request) => {
+  const authHeader = req.headers.get('authorization');
+  const secret = process.env.SECRET;
+
+  if (!secret) {
+    throw new Error('JWT secret not set');
+  }
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const payload = jwt.verify(token, secret) as { userID: number };
+    return payload;
+  } catch (err) {
+    return null;
+  }
+};
+
 const app = new Elysia()
     .use(cors())
     .get('/',()=>{
@@ -86,7 +108,34 @@ const app = new Elysia()
           }
         }
       })
-      
+    .get('/me' , async (req) => {
+      const payload = await authenticate(req.request)
+      if (!payload) {
+        return {
+          success: false,
+          message: 'Unauthorized',
+        };
+      }
+
+      const user = await prisma.user.findUnique({
+        where: {
+          id: payload.userID,
+        },
+      });
+
+      if (!user) {
+        return {
+          success: false,
+          message: 'User not found',
+        };
+      }
+      return {
+        success: true,
+        message: 'User fetched',
+        user,
+      };
+
+    })
     .listen(3000)
 
 console.log(

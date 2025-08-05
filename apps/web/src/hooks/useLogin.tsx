@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export function useLogin() {
   return useMutation({
@@ -36,5 +36,35 @@ export function useVerify () {
 
       return res.json()
     }
+  })
+}
+
+export function isLoginUser () {
+  return useQuery({
+    queryKey: ['me'],
+    queryFn: async () => {
+      const token = localStorage.getItem('tokenMarket')
+      if(!token) {
+        return{
+          success: false,
+          message: 'unauthorized'
+        }
+      }
+      const res = await fetch('http://localhost:3000/me',{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      })
+      if(!res.ok){
+        localStorage.removeItem('tokenMarket')
+        return{
+          success: false,
+          message: 'unauthorized'
+        }
+      }
+      return res.json()
+    },
+    retry: false,
+    refetchOnWindowFocus: false
   })
 }

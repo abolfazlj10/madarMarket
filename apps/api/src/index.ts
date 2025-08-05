@@ -1,6 +1,7 @@
 import { Elysia } from 'elysia';
 import { PrismaClient } from '@prisma/client'
 import { cors } from '@elysiajs/cors'
+import jwt from 'jsonwebtoken'
 
 const prisma = new PrismaClient()
 
@@ -58,18 +59,25 @@ const app = new Elysia()
       .post('/verfiy', async (req) => {
         const body = await req.request.json()
         const { otp, phone } = body as {otp: string, phone: string}
-        console.log(otp)
         
         const userData = await prisma.user.findUnique({
           where:{phone}
         })
 
         const otpTarget = userData?.otpCode
+        const secret = process.env.SECRET
+        if(!secret){
+          throw new Error('JWT SECRET is not defined in evironemnt variables')
+        }
         
         if(otpTarget == otp){
+          const token = jwt.sign({userID:userData?.id}, secret,{
+            expiresIn: '7d'
+          })
           return {
             success : true,
-            message: 'verified code'
+            message: 'verified code',
+            token: token
           }
         }else{
           return {
@@ -77,7 +85,6 @@ const app = new Elysia()
             message: 'invalid code'
           }
         }
-        
       })
       
     .listen(3000)

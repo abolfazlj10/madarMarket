@@ -128,6 +128,8 @@ const Login = () => {
                 onSuccess: (data) => {
                     if(data.success){
                         toast.success('ورود با موفقیت انجام شد.')
+                        const token = data.token
+                        localStorage.setItem('tokenMarket', token)
                         navigate('/')
                     }else{
                         setOtp('')

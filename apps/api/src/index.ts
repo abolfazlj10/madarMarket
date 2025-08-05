@@ -2,6 +2,7 @@ import { Elysia } from 'elysia';
 import { PrismaClient } from '@prisma/client'
 import { cors } from '@elysiajs/cors'
 import jwt from 'jsonwebtoken'
+import serveStatic, { staticPlugin } from '@elysiajs/static'
 
 const prisma = new PrismaClient()
 
@@ -29,6 +30,10 @@ const authenticate = async (req: Request) => {
 
 const app = new Elysia()
     .use(cors())
+    .use(staticPlugin({
+      assets: 'public/categories', // The physical folder on your server
+      prefix: '/categories'      // The URL prefix your frontend uses
+    }))
     .get('/',()=>{
         return 'hello from server'
     })
@@ -41,9 +46,11 @@ const app = new Elysia()
         }
     })
     .get('/categories', async () => {
-      const users = await prisma.category.findMany()
-      return users
-      
+      const categories = await prisma.category.findMany()
+      return {
+        success: true,
+        data: categories
+      }
     })
     .post('/login', async (req) => {
         const body = await req.request.json()

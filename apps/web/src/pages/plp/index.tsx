@@ -4,16 +4,20 @@ import Pdp from "../../components/pdp";
 import PlpFilter from "../../components/plpFilter";
 import SpecialSales from "../../components/specialSales";
 import Tags from "../../components/tags";
-import { RiShoppingBasket2Line } from "react-icons/ri";
+import { useGetpProductsFromCategory } from "../../hooks/useProduct";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import { useParams } from "react-router-dom";
+import type { categories, product } from "../../types/type";
 
 const showCategoey = true
 
 const PLP = () => {
     const [showPdp, setShowPdp] = useState(false);
+    const {id : categoryId} = useParams()
+    const { data } = useGetpProductsFromCategory(categoryId)
     const [expandedBaskets, setExpandedBaskets] = useState<{ [key: number]: boolean }>({});
-        const [productCounts, setProductCounts] = useState<{ [key: number]: number }>({});
+    const [productCounts, setProductCounts] = useState<{ [key: number]: number }>({});
     
     const handleIncreaseCount = (productId: number) => {
         setProductCounts(prev => ({
@@ -50,21 +54,21 @@ const PLP = () => {
         handleIncreaseCount(productId);
     };
     
-    const ProudctItem = ({id}: {id: number}) => (
+    const ProudctItem = ({id,title,image,price,discount}: {id: number,title: string,image: string, price:number,discount: number}) => (
         <>
             <div className="cursor-pointer" onClick={() => setShowPdp(true)}>
-                <img src="/icons/cheese.png" />
+                <img src={`http://localhost:3000/products/${image}`}  className="w-20"/>
             </div>
             <div className="flex-1 flex flex-col gap-3">
-                <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>روغن زیتون بکر کریستال - 5 لیتر پنیر فتا دوشه هراز روغن زیتون بکر کریستال - 5 لیتر پنیر فتا دوشه هرا</div>
+                <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>{title}</div>
                 <div className="flex items-center flex-1">
                 <div className="flex-1">
-                    {id != 1 ? <div className="flex gap-2 items-center">
+                    {discount ? <div className="flex gap-2 items-center">
                         <div className="text-[#787471] text-sm"><del>40,000تومان</del></div>
-                        <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">10%</div>
+                        <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">{discount}%</div>
                     </div> : <div className="opacity-0 select-none">.</div>}
                     <div className="flex gap-1 items-center">
-                        <div className="text-[#BA400B] font-bold">۳,۷۰۰,۰۰۰</div>
+                        <div className="text-[#BA400B] font-bold">{price.toLocaleString('fa-IR')}</div>
                         <div className="text-[#BA400B] text-xs">تومان</div>
                     </div>
                 </div>
@@ -124,12 +128,12 @@ const PLP = () => {
             )}
             <PlpFilter />
             <div className="space-y-3">
-                {["","","","","","",""].map((item,idx)=>(
+                {data?.map((item: product,idx:number)=>(
                     <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
                         {idx == 0 || idx == 2 ? (
                             <>
                             <div className="flex px-2 pt-2 gap-4">
-                                <ProudctItem id={idx} />
+                                <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
                             </div>
                             <div className="bg-[#FFEDE5] flex justify-between py-2 px-4">
                                 <div className="text-[#BA400B] font-bold">قیمت با حامی کارت</div>
@@ -140,7 +144,7 @@ const PLP = () => {
                             </div>
                             </>
                         ):(
-                            <ProudctItem id={idx} />
+                            <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
                         )}
                     </div>
                 ))}

@@ -31,8 +31,12 @@ const authenticate = async (req: Request) => {
 const app = new Elysia()
     .use(cors())
     .use(staticPlugin({
-      assets: 'public/categories', // The physical folder on your server
-      prefix: '/categories'      // The URL prefix your frontend uses
+      assets: 'public/categories', 
+      prefix: '/categories'
+    }))
+    .use(staticPlugin({
+      assets: 'public/products', 
+      prefix: '/products'
     }))
     .get('/',()=>{
         return 'hello from server'
@@ -147,6 +151,22 @@ const app = new Elysia()
         user,
       };
 
+    })
+    .get('/productEachCategory/:id', async (req)=>{
+      const { id } = req.params
+      const products = await prisma.product.findMany({
+        where:{categoryId: Number(id)}
+      })
+      if(!products)
+        return{
+          success: false,
+          message: 'a problem to find products'
+      }
+      return{
+        success: true,
+        message: 'products sent',
+        data: products
+      }
     })
     .listen(3000)
 

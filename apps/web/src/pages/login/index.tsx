@@ -8,6 +8,7 @@ import OTPInput from "react-otp-input";
 import { useLogin, useVerify } from "../../hooks/useLogin";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 
 type InputsPhone = {
     phone: string
@@ -38,7 +39,7 @@ const Login = () => {
     const [canResend, setCanResend] = useState<boolean>(false)
 
     const navigate = useNavigate()
-  
+    const queryClient = useQueryClient()
 
     useEffect(() => {
         if (!showOTP) return;
@@ -130,6 +131,7 @@ const Login = () => {
                         toast.success('ورود با موفقیت انجام شد.')
                         const token = data.token
                         localStorage.setItem('tokenMarket', token)
+                        queryClient.invalidateQueries({ queryKey: ['me'] })
                         navigate('/')
                     }else{
                         setOtp('')

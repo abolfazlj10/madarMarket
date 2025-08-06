@@ -2,20 +2,23 @@ import { useUser } from "../../context/userContext"
 import { RiUserSmileFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { isLoginUser } from "../../hooks/useLogin";
 import { FadeLoader } from "react-spinners";
 const Profile = () => {
     const { user, logout } = useUser()
     const navigate = useNavigate()
+    const { data: userData } = isLoginUser()
     const logoutUser = () => {
         logout()
         navigate('/login')
     }
-    console.log(user)
     useEffect(() => {
-        if(!user) {
-            navigate('/login')
+        if(userData != undefined){
+            if(!userData?.success){
+                navigate('/login')
+            }
         }
-    }, [user])
+    },[])
     return(
         <>
         {user ? (

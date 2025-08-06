@@ -59,6 +59,7 @@ const app = new Elysia()
     .post('/login', async (req) => {
         const body = await req.request.json()
         const { phone } = body as { phone: string }  
+        console.log(phone)
         if (!phone) {
           return {
             success: false,
@@ -70,13 +71,13 @@ const app = new Elysia()
         const existingUser = await prisma.user.findUnique({
           where: { phone: phone }
         })
-      
+
+        console.log(existingUser)
         if (existingUser) {
           await prisma.user.update({
             where: { phone },
             data: {
               otpCode: otp,
-              updatedAt: new Date()
             }
           })
         } else {

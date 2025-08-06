@@ -62,7 +62,8 @@ export function isLoginUser () {
           message: 'unauthorized'
         }
       }
-      return res.json()
+      const data = await res.json()
+      return data
     },
     retry: false,
     refetchOnWindowFocus: false

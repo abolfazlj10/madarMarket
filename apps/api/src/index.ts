@@ -180,6 +180,17 @@ const app = new Elysia()
         data: specialProducts
       }
     })
+    .get('/tagsByCategory/:id',async (req)=>{
+      const { id } = req.params
+      const tags  = await prisma.tag.findMany({
+        where:{categoryId: Number(id)}
+      })
+      return{
+        success: true,
+        message: 'tags by category',
+        data: tags
+      }
+    })
     .listen(3000)
 
 console.log(

@@ -13,3 +13,9 @@ export type product = {
     categoryId: number
     category: categories[]
 }
+export type tag = {
+    id: number
+    name: string
+    categoryId: number
+    category: categories[]
+}

@@ -8,24 +8,34 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  phone String  @unique
-  otpCode String
+  id           Int      @id @default(autoincrement())
+  phone        String   @unique
+  otpCode      String
   otpCreatedAt DateTime
 }
+
 model Category {
-  id Int @id @default(autoincrement())
-  name String
-  image String
+  id       Int       @id @default(autoincrement())
+  name     String
+  image    String
   products product[]
+  tags     Tag[] // یک دسته‌بندی چند تگ داره
 }
+
 model product {
-  id Int @id @default(autoincrement())
-  name String
-  image String
-  price Int
-  discount Int
+  id         Int      @id @default(autoincrement())
+  name       String
+  image      String
+  price      Int
+  discount   Int
+  isSpecial  Boolean  @default(false)
   categoryId Int
-  isSpecial Boolean @default(false)
-  category Category @relation(fields: [categoryId],references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Tag {
+  id         Int      @id @default(autoincrement())
+  name       String
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
 }

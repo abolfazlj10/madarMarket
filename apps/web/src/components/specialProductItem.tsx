@@ -9,14 +9,14 @@ const SpecialProductsItem = ({ product }: { product?: any }) => {
         <div className="px-2 truncate">{product.name}</div>
   
         <div className="px-2">
-          {product.discount && (
+          {product.discount ? (
             <div className="flex gap-2 items-center">
               <div className="text-[#787471] text-sm"><del>{product.price.toLocaleString('fa-IR')}</del></div>
               <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">
                 {product.discount}%
               </div>
             </div>
-          )}
+          ): <div className="opacity-0 select-none">t</div>}
           <div className="flex gap-1 items-center">
             <div className="text-[#BA400B] font-bold">{finalPrice.toLocaleString('fa-IR')}</div>
             <div className="text-[#BA400B] text-xs">تومان</div>

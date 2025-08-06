@@ -11,3 +11,14 @@ export function useGetpProductsFromCategory (id:string | undefined) {
         }
     })
 }
+export function useGetSpecialProducts () {
+    return useQuery<product[]>({
+        queryKey: ['specialProducts'],
+        queryFn: async () => {
+            const req = await fetch('http://localhost:3000/specialProducts')
+            const res = await req.json()
+            console.log(res)
+            return res.data
+        }
+    })
+}

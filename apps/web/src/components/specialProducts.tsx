@@ -2,8 +2,11 @@ import SpecialProductsItem from "./specialProductItem"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
 import data from "../data.json"
+import { useGetSpecialProducts } from "../hooks/useProduct"
+import type { product } from "../types/type"
 
 const SpecialProducts = () => {
+    const { data: specialProduct } = useGetSpecialProducts()
     return(
         <div className="flex flex-col gap-3 pb-20">
             <div className="flex justify-between items-center">
@@ -25,7 +28,7 @@ const SpecialProducts = () => {
                         direction: 'rtl'
                     }}
                 >
-                    {data.featured_products.map((product, index) =>(    
+                    {specialProduct?.slice().reverse().map((product, index) => ( 
                         <SwiperSlide key={index}>
                             <SpecialProductsItem product={product} />
                         </SwiperSlide>
@@ -47,8 +50,8 @@ const SpecialProducts = () => {
                         direction: 'rtl'
                     }}
                 >
-                    {data.featured_products.map((product, index) =>(
-                        <SwiperSlide key={index}>
+                    {specialProduct?.map((product, index) =>(
+                        <SwiperSlide key={index} className="flex">
                             <SpecialProductsItem product={product} />
                         </SwiperSlide>
                     ))}

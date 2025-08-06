@@ -169,6 +169,17 @@ const app = new Elysia()
         data: products
       }
     })
+    .get('/specialProducts', async () =>{
+      const specialProducts = await prisma.product.findMany({
+        where:{isSpecial:true}
+      })
+      console.log(specialProducts)
+      return {
+        success: true,
+        message: 'specia products sent',
+        data: specialProducts
+      }
+    })
     .listen(3000)
 
 console.log(

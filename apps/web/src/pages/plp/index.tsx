@@ -54,67 +54,76 @@ const PLP = () => {
         handleIncreaseCount(productId);
     };
     
-    const ProudctItem = ({id,title,image,price,discount}: {id: number,title: string,image: string, price:number,discount: number}) => (
-        <>
-            <div className="cursor-pointer" onClick={() => setShowPdp(true)}>
-                <img src={`http://localhost:3000/products/${image}`}  className="w-20"/>
-            </div>
-            <div className="flex-1 flex flex-col gap-3">
-                <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>{title}</div>
-                <div className="flex items-center flex-1">
-                <div className="flex-1">
-                    {discount ? <div className="flex gap-2 items-center">
-                        <div className="text-[#787471] text-sm"><del>40,000تومان</del></div>
-                        <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">{discount}%</div>
-                    </div> : <div className="opacity-0 select-none">.</div>}
-                    <div className="flex gap-1 items-center">
-                        <div className="text-[#BA400B] font-bold">{price.toLocaleString('fa-IR')}</div>
-                        <div className="text-[#BA400B] text-xs">تومان</div>
-                    </div>
+    const ProudctItem = ({ id, title, image, price, discount }: { id: number, title: string, image: string, price: number, discount: number }) => {
+        const finalPrice = discount ? Math.round(price * (1 - discount / 100)) : price;
+    
+        return (
+            <>
+                <div className="cursor-pointer" onClick={() => setShowPdp(true)}>
+                    <img src={`http://localhost:3000/products/${image}`} className="w-20" />
                 </div>
-                    <div className="flex-1 flex items-center justify-end">
-                        <div 
-                            className="border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm py-2 px-3 hover:shadow cursor-pointer duration-200 rounded-full font-semibold flex items-center justify-center" 
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                if (!productCounts[id] || productCounts[id] === 0) {
-                                    handleAddToBasket(id);
-                                }
-                            }}
-                        >
-                            {productCounts[id] && productCounts[id] > 0 ? (
-                                <div className="flex gap-4 items-center">
-                                    <div className="flex-1">
-                                        <img 
-                                            src="/icons/plus.svg" 
-                                            className="w-6 cursor-pointer duration-200 hover:scale-110" 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleIncreaseCount(id);
-                                            }} 
-                                        />
-                                    </div>
-                                    <div className="flex-1 flex items-center justify-center text-lg">{productCounts[id]}</div>
-                                    <div className="flex-1">
-                                        <img 
-                                            src="/icons/trash.svg" 
-                                            className="w-6 cursor-pointer duration-200 hover:scale-110" 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleDecreaseCount(id);
-                                            }} 
-                                        />
-                                    </div>
+                <div className="flex-1 flex flex-col gap-3">
+                    <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>{title}</div>
+                    <div className="flex items-center flex-1">
+                        <div className="flex-1">
+                            {discount ? (
+                                <div className="flex gap-2 items-center">
+                                    <div className="text-[#787471] text-sm"><del>{price.toLocaleString('fa-IR')}</del></div>
+                                    <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">{discount}%</div>
                                 </div>
                             ) : (
-                                'افزودن به سبد'
+                                <div className="opacity-0 select-none">.</div>
                             )}
+                            <div className="flex gap-1 items-center">
+                                <div className="text-[#BA400B] font-bold">{finalPrice.toLocaleString('fa-IR')}</div>
+                                <div className="text-[#BA400B] text-xs">تومان</div>
+                            </div>
+                        </div>
+                        <div className="flex-1 flex items-center justify-end">
+                            <div 
+                                className="border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm py-2 px-3 hover:shadow cursor-pointer duration-200 rounded-full font-semibold flex items-center justify-center" 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (!productCounts[id] || productCounts[id] === 0) {
+                                        handleAddToBasket(id);
+                                    }
+                                }}
+                            >
+                                {productCounts[id] && productCounts[id] > 0 ? (
+                                    <div className="flex gap-4 items-center">
+                                        <div className="flex-1">
+                                            <img 
+                                                src="/icons/plus.svg" 
+                                                className="w-6 cursor-pointer duration-200 hover:scale-110" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleIncreaseCount(id);
+                                                }} 
+                                            />
+                                        </div>
+                                        <div className="flex-1 flex items-center justify-center text-lg">{productCounts[id]}</div>
+                                        <div className="flex-1">
+                                            <img 
+                                                src="/icons/trash.svg" 
+                                                className="w-6 cursor-pointer duration-200 hover:scale-110" 
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDecreaseCount(id);
+                                                }} 
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
+                                    'افزودن به سبد'
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+        );
+    };
+    
 
     return(
         <div className="space-y-3 pb-20">
@@ -138,7 +147,9 @@ const PLP = () => {
                             <div className="bg-[#FFEDE5] flex justify-between py-2 px-4">
                                 <div className="text-[#BA400B] font-bold">قیمت با حامی کارت</div>
                                 <div className="flex gap-1 items-center">
-                                    <div className="text-[#BA400B] font-bold">۳,۷۰۰,۰۰۰</div>
+                                    <div className="text-[#BA400B] font-bold">
+                                        {(item.price * 0.9).toLocaleString('fa-IR')}
+                                    </div>
                                     <div className="text-[#BA400B] text-xs">تومان</div>
                                 </div>
                             </div>

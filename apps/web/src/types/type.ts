@@ -9,6 +9,7 @@ export type product = {
     image: string
     price: number
     discount: number
+    isSpecial: boolean
     categoryId: number
     category: categories[]
 }

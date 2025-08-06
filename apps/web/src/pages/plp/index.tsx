@@ -137,28 +137,45 @@ const PLP = () => {
             )}
             <PlpFilter />
             <div className="space-y-3">
-                {data?.map((item: product,idx:number)=>(
-                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
-                        {idx == 0 || idx == 2 ? (
-                            <>
-                            <div className="flex px-2 pt-2 gap-4">
-                                <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
-                            </div>
-                            <div className="bg-[#FFEDE5] flex justify-between py-2 px-4">
-                                <div className="text-[#BA400B] font-bold">قیمت با حامی کارت</div>
-                                <div className="flex gap-1 items-center">
-                                    <div className="text-[#BA400B] font-bold">
-                                        {(item.price * 0.9).toLocaleString('fa-IR')}
+                {data ? (
+                    data?.map((item: product,idx:number)=>(
+                        <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg ${idx == 0 || idx == 2 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
+                            {idx == 0 || idx == 2 ? (
+                                <>
+                                <div className="flex px-2 pt-2 gap-4">
+                                    <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
+                                </div>
+                                <div className="bg-[#FFEDE5] flex justify-between py-2 px-4">
+                                    <div className="text-[#BA400B] font-bold">قیمت با حامی کارت</div>
+                                    <div className="flex gap-1 items-center">
+                                        <div className="text-[#BA400B] font-bold">
+                                            {(item.price * 0.9).toLocaleString('fa-IR')}
+                                        </div>
+                                        <div className="text-[#BA400B] text-xs">تومان</div>
                                     </div>
-                                    <div className="text-[#BA400B] text-xs">تومان</div>
+                                </div>
+                                </>
+                            ):(
+                                <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
+                            )}
+                        </div>
+                    ))
+                ):(
+                    <>
+                    {["","",""].map(()=>(
+                        <div className="border border-[#F5F2EF] rounded-lg h-32 flex p-2 gap-2">
+                            <div className="skeleton w-4/12"></div>
+                            <div className="flex-1 flex flex-col justify-between">
+                                <div className="h-5 w-32 skeleton"></div>
+                                <div className="flex justify-between items-end">
+                                    <div className="skeleton w-20 h-5"></div>
+                                    <div className="skeleton w-28 h-8 rounded-full"></div>
                                 </div>
                             </div>
-                            </>
-                        ):(
-                            <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
-                        )}
-                    </div>
-                ))}
+                        </div>
+                    ))}
+                    </>
+                )}
             </div>
             <AnimatePresence>
                 {showPdp && <Pdp onClose={() => setShowPdp(false)} />}

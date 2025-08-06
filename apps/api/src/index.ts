@@ -58,8 +58,7 @@ const app = new Elysia()
     })
     .post('/login', async (req) => {
         const body = await req.request.json()
-        const { phone } = body as { phone: string }  
-        console.log(phone)
+        const { phone } = body as { phone: string }
         if (!phone) {
           return {
             success: false,
@@ -71,8 +70,6 @@ const app = new Elysia()
         const existingUser = await prisma.user.findUnique({
           where: { phone: phone }
         })
-
-        console.log(existingUser)
         if (existingUser) {
           await prisma.user.update({
             where: { phone },
@@ -173,7 +170,6 @@ const app = new Elysia()
       const specialProducts = await prisma.product.findMany({
         where:{isSpecial:true}
       })
-      console.log(specialProducts)
       return {
         success: true,
         message: 'specia products sent',

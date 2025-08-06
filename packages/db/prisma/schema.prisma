@@ -26,5 +26,6 @@ model product {
   price Int
   discount Int
   categoryId Int
+  isSpecial Boolean @default(false)
   category Category @relation(fields: [categoryId],references: [id])
 }

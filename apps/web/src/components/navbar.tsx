@@ -33,8 +33,8 @@ const Navbar = () => {
 
     const navbarItems = [
         { icon: RiHome6Line, text: "خانه", index: 0, path: '/' },
-        { icon: BiBasket, text: "سبد خرید", index: 1, path: '/profile' },
-        { icon: RiFileList3Line, text: "سفارش ها", index: 2, path: '/profile' },
+        { icon: BiBasket, text: "سبد خرید", index: 1, path: '/basket' },
+        { icon: RiFileList3Line, text: "سفارش ها", index: 2, path: '/orders' },
         { icon: CgProfile, text: "پروفایل", index: 3, path: '/profile' }
     ];
 

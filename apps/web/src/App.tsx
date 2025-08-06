@@ -9,6 +9,8 @@ import { Toaster } from "react-hot-toast"
 import PLP from './pages/plp';
 import { isLoginUser } from './hooks/useLogin';
 import { useEffect } from 'react';
+import Basket from './pages/basket';
+import Orders from './pages/orders';
 
 const queryClient = new QueryClient()
 
@@ -24,6 +26,8 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/product/:id" element={<PLP />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/basket" element={<Basket />} />
+        <Route path="/orders" element={<Orders />} />
       </Routes>
       {!isLoginPage && <Navbar />}
     </div>

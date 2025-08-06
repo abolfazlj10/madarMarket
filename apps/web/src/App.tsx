@@ -1,3 +1,4 @@
+import { AnimatePresence, motion } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -7,8 +8,6 @@ import Profile from './pages/profile/index'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from "react-hot-toast"
 import PLP from './pages/plp';
-import { isLoginUser } from './hooks/useLogin';
-import { useEffect } from 'react';
 import Basket from './pages/basket';
 import Orders from './pages/orders';
 

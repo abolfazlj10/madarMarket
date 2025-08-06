@@ -4,11 +4,13 @@ import { CgProfile } from "react-icons/cg";
 import { RiFileList3Line } from "react-icons/ri";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState(0);
     const [indicatorPosition, setIndicatorPosition] = useState(0);
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const location = useLocation()
 
     const handleItemClick = (index: number) => {
         setActiveItem(index);
@@ -27,9 +29,22 @@ const Navbar = () => {
         }
     };
 
+    const getActiveIndexFromPath = (path: string) => {
+        const match = navbarItems.find(item => item.path === path);
+        return match ? match.index : 0;
+    };
+
     useEffect(() => {
-        updateIndicatorPosition(activeItem);
-    }, []);
+        const index = getActiveIndexFromPath(location.pathname);
+        setActiveItem(index);
+        requestAnimationFrame(() => {
+            updateIndicatorPosition(index);
+        });
+    }, [location.pathname]);
+    
+    // useEffect(() => {
+    //     updateIndicatorPosition(activeItem);
+    // }, []);
 
     const navbarItems = [
         { icon: RiHome6Line, text: "خانه", index: 0, path: '/' },

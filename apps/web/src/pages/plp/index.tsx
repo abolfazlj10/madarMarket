@@ -9,6 +9,7 @@ import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { useParams } from "react-router-dom";
 import type { categories, product } from "../../types/type";
+import { useCart } from "../../context/cartContext";
 
 const showCategoey = true
 
@@ -18,6 +19,7 @@ const PLP = () => {
     const { data } = useGetpProductsFromCategory(categoryId)
     const [expandedBaskets, setExpandedBaskets] = useState<{ [key: number]: boolean }>({});
     const [productCounts, setProductCounts] = useState<{ [key: number]: number }>({});
+    const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart()
     
     const handleIncreaseCount = (productId: number) => {
         setProductCounts(prev => ({
@@ -54,28 +56,30 @@ const PLP = () => {
         handleIncreaseCount(productId);
     };
     
-    const ProudctItem = ({ id, title, image, price, discount }: { id: number, title: string, image: string, price: number, discount: number }) => {
-        const finalPrice = discount ? Math.round(price * (1 - discount / 100)) : price;
-    
+    const ProudctItem = ({ productDetail} : {productDetail : product}) => {
+        const finalPrice = productDetail?.discount ? Math.round(productDetail?.price * (1 - productDetail?.discount / 100)) : productDetail?.price;
+        const itemInCart = cart.find((item) => item.id === productDetail.id);
+
+        const quantity = itemInCart ? itemInCart.quantity : 0;
         return (
             <>
                 <div className="cursor-pointer" onClick={() => setShowPdp(true)}>
-                    <img src={`http://localhost:3000/products/${image}`} className="w-20" />
+                    <img src={`http://localhost:3000/products/${productDetail?.image}`} className="w-20" />
                 </div>
                 <div className="flex-1 flex flex-col gap-3">
-                    <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>{title}</div>
+                    <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>{productDetail?.name}</div>
                     <div className="flex items-center flex-1">
                         <div className="flex-1">
-                            {discount ? (
+                            {productDetail?.discount ? (
                                 <div className="flex gap-2 items-center">
-                                    <div className="text-[#787471] text-sm"><del>{price.toLocaleString('fa-IR')}</del></div>
-                                    <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">{discount}%</div>
+                                    <div className="text-[#787471] text-sm"><del>{productDetail?.price.toLocaleString('fa-IR')}</del></div>
+                                    <div className="bg-[#C50F1F] text-white rounded-2xl p-1 text-xs">{productDetail?.discount}%</div>
                                 </div>
                             ) : (
                                 <div className="opacity-0 select-none">.</div>
                             )}
                             <div className="flex gap-1 items-center">
-                                <div className="text-[#BA400B] font-bold">{finalPrice.toLocaleString('fa-IR')}</div>
+                                <div className="text-[#BA400B] font-bold">{finalPrice?.toLocaleString('fa-IR')}</div>
                                 <div className="text-[#BA400B] text-xs">تومان</div>
                             </div>
                         </div>
@@ -84,12 +88,13 @@ const PLP = () => {
                                 className="border border-[#F5F2EF] bg-[#F7F7F7] text-[#787471] text-sm py-2 px-3 hover:shadow cursor-pointer duration-200 rounded-full font-semibold flex items-center justify-center" 
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    if (!productCounts[id] || productCounts[id] === 0) {
-                                        handleAddToBasket(id);
+                                    if (!productCounts[productDetail?.id] || productCounts[productDetail?.id] === 0) {
+                                        handleAddToBasket(productDetail?.id);
+                                        addToCart(productDetail)
                                     }
                                 }}
                             >
-                                {productCounts[id] && productCounts[id] > 0 ? (
+                                {quantity > 0 ? (
                                     <div className="flex gap-4 items-center">
                                         <div className="flex-1">
                                             <img 
@@ -97,18 +102,20 @@ const PLP = () => {
                                                 className="w-6 cursor-pointer duration-200 hover:scale-110" 
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    handleIncreaseCount(id);
+                                                    // handleIncreaseCount(item.id);
+                                                    increaseQuantity(productDetail.id)
                                                 }} 
                                             />
                                         </div>
-                                        <div className="flex-1 flex items-center justify-center text-lg">{productCounts[id]}</div>
+                                        <div className="flex-1 flex items-center justify-center text-lg">{quantity}</div>
                                         <div className="flex-1">
                                             <img 
                                                 src="/icons/trash.svg" 
                                                 className="w-6 cursor-pointer duration-200 hover:scale-110" 
                                                 onClick={(e) => {
                                                     e.stopPropagation();
-                                                    handleDecreaseCount(id);
+                                                    decreaseQuantity(productDetail.id)
+                                                    // handleDecreaseCount(productDetail?.id);
                                                 }} 
                                             />
                                         </div>
@@ -143,7 +150,7 @@ const PLP = () => {
                             {idx == 0 || idx == 2 ? (
                                 <>
                                 <div className="flex px-2 pt-2 gap-4">
-                                    <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
+                                    <ProudctItem productDetail={item}/>
                                 </div>
                                 <div className="bg-[#FFEDE5] flex justify-between py-2 px-4">
                                     <div className="text-[#BA400B] font-bold">قیمت با حامی کارت</div>
@@ -156,14 +163,14 @@ const PLP = () => {
                                 </div>
                                 </>
                             ):(
-                                <ProudctItem id={idx} price={item.price} image={item.image}  discount={item.discount} title={item.name} />
+                                <ProudctItem productDetail={item}/>
                             )}
                         </div>
                     ))
                 ):(
                     <>
-                    {["","",""].map(()=>(
-                        <div className="border border-[#F5F2EF] rounded-lg h-32 flex p-2 gap-2">
+                    {["","",""].map((_,idx)=>(
+                        <div key={idx} className="border border-[#F5F2EF] rounded-lg h-32 flex p-2 gap-2">
                             <div className="skeleton w-4/12"></div>
                             <div className="flex-1 flex flex-col justify-between">
                                 <div className="h-5 w-32 skeleton"></div>

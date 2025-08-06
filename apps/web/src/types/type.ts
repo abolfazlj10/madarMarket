@@ -11,11 +11,12 @@ export type product = {
     discount: number
     isSpecial: boolean
     categoryId: number
-    category: categories[]
+    category: categories
 }
 export type tag = {
     id: number
     name: string
     categoryId: number
-    category: categories[]
+    category: categories
 }
+export type CartItem = product & { quantity: number };

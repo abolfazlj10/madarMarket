@@ -5,12 +5,14 @@ import { RiFileList3Line } from "react-icons/ri";
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useCart } from "../context/cartContext";
 
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState(0);
     const [indicatorPosition, setIndicatorPosition] = useState(0);
     const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
     const location = useLocation()
+    const { cart } = useCart()
 
     const handleItemClick = (index: number) => {
         setActiveItem(index);
@@ -41,10 +43,6 @@ const Navbar = () => {
             updateIndicatorPosition(index);
         });
     }, [location.pathname]);
-    
-    // useEffect(() => {
-    //     updateIndicatorPosition(activeItem);
-    // }, []);
 
     const navbarItems = [
         { icon: RiHome6Line, text: "خانه", index: 0, path: '/' },
@@ -72,13 +70,11 @@ const Navbar = () => {
                         ref={(el) => {
                             itemRefs.current[item.index] = el;
                         }}
-                        className={`items-center space-y-1 cursor-pointer transition-colors duration-300 ${
-                            activeItem === item.index ? 'text-mainColor' : 'text-[#B3B2B2]'
-                        } hover:text-mainColor`}
                         onClick={() => handleItemClick(item.index)}
-                    >
-                        <IconComponent className="text-xl mx-auto" />
-                        <div className="text-xs">{item.text}</div>
+                        className={`relative items-center space-y-1 cursor-pointer transition-colors duration-300 ${activeItem === item.index ? 'text-mainColor' : 'text-[#B3B2B2]'} hover:text-mainColor`}>
+                            <IconComponent className="text-xl mx-auto" />
+                            <div className="text-xs">{item.text}</div>
+                            {(item.index == 1 && cart.length != 0) && <div className="absolute -top-2 bg-mainColor rounded-full w-4 h-4 text-xs flex justify-center items-center text-white">{cart.length}</div>}
                     </Link>
                 );
             })}

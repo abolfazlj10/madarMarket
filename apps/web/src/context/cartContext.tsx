@@ -1,9 +1,9 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
-import type { Product, CartItem } from "../types/yourTypeFile"; // ← مسیر درست رو وارد کن
+import type { product, CartItem } from '../types/type'
 
 type CartContextType = {
   cart: CartItem[];
-  addToCart: (item: Product) => void;
+  addToCart: (item: product) => void;
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
 };
@@ -13,7 +13,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
-  const addToCart = (item: Product) => {
+  const addToCart = (item: product) => {
     setCart((prev) => {
       const existing = prev.find((p) => p.id === item.id);
       if (existing) {
@@ -42,8 +42,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(()=>{
-    console.log(cart)
+    if(cart?.length != 0)
+      localStorage.setItem('basketCartMadarMarket', JSON.stringify(cart))
   },[cart])
+
+  useEffect(()=>{
+    const basketsLocal = localStorage.getItem('basketCartMadarMarket')
+    if(basketsLocal){
+      setCart(JSON.parse(basketsLocal))
+    }
+  },[])
 
   return (
     <CartContext.Provider

@@ -187,6 +187,24 @@ const app = new Elysia()
         data: tags
       }
     })
+    .get('/searchProducts/:name', async (req) => {
+        const { name } = req.params
+        const filteredProducts = await prisma.product.findMany({
+          where: {
+            name: {
+              contains: name,
+              mode: 'insensitive',
+            },
+          },
+          take: 5
+        });
+    
+        return {
+          success: true,
+          message: 'Products filtered successfully',
+          data: filteredProducts,
+        };
+    })
     .listen(3000)
 
 console.log(

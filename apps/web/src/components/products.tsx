@@ -1,4 +1,4 @@
-import ProductItem from "./productItem"
+import CategoryItem from "./categoryItem"
 import type { categories } from "../types/type"
 import { useGetCategories } from "../hooks/useCategory"
 const Products = () => {
@@ -12,7 +12,7 @@ const Products = () => {
             <div className="grid grid-cols-4 gap-x-3 gap-y-4">
                 {data ? (
                     data?.map((category : categories, index: number) =>(
-                        <ProductItem key={index} id={category.id} title={category.name} image={category.image} />
+                        <CategoryItem key={index} id={category.id} title={category.name} image={category.image} />
                     ))
                 ) : (
                     ["","","","","","","","","","","","","","","",""].map((item,idx:number) => (

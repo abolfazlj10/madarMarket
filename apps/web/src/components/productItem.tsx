@@ -1,14 +1,15 @@
 import { useCart } from "../context/cartContext";
 import type { product } from "../types/type";
+import { usePdp } from "../context/pdpContext";
 
 interface INPproductItem {
     productDetail : product,
-    setShowPdp: (val: boolean) => void
     index: number
 }
 
-const ProudctItem = ({ productDetail, setShowPdp,index} : INPproductItem) => {
+const ProudctItem = ({ productDetail,index} : INPproductItem) => {
     const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart()
+    const {openPdp} = usePdp()
 
     const finalPrice = productDetail?.discount ? Math.round(productDetail?.price * (1 - productDetail?.discount / 100)) : productDetail?.price;
     const itemInCart = cart.find((item) => item.id === productDetail.id);
@@ -17,11 +18,11 @@ const ProudctItem = ({ productDetail, setShowPdp,index} : INPproductItem) => {
     
     const NormalProduct = () => (
         <>
-            <div className="cursor-pointer" onClick={() => setShowPdp(true)}>
+            <div className="cursor-pointer" onClick={() => openPdp(productDetail)}>
                 <img src={`http://localhost:3000/products/${productDetail?.image}`} className="w-20" />
             </div>
             <div className="flex-1 flex flex-col gap-3">
-                <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => setShowPdp(true)}>{productDetail?.name}</div>
+                <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => openPdp(productDetail)}>{productDetail?.name}</div>
                 <div className="flex items-center flex-1">
                     <div className="flex-1">
                         {productDetail?.discount ? (

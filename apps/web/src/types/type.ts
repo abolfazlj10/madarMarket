@@ -11,7 +11,6 @@ export type product = {
     discount: number
     isSpecial: boolean
     categoryId: number
-    category: categories
 }
 export type tag = {
     id: number

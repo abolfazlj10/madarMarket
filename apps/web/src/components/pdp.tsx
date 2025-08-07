@@ -1,18 +1,19 @@
 import { MdClose } from "react-icons/md";
-import { RiShoppingBasket2Line } from "react-icons/ri";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import type { product } from "../types/type";
 interface PdpProps {
     onClose: () => void;
+    product: product
 }
 
-const Pdp = ({ onClose }: PdpProps) => {
+const Pdp = ({ onClose, product }: PdpProps) => {
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [productCount, setProductCount] = useState(0);
-    const totalSlides = 3; // تعداد اسلایدها
+    const totalSlides = 3; 
     const swiperRef = useRef<any>(null);
 
     const handleIncreaseCount = () => {
@@ -47,17 +48,16 @@ const Pdp = ({ onClose }: PdpProps) => {
                 className="mySwiper h-full border-2 border-white rounded-xl"
             >
                 <SwiperSlide className="bg-white">
-                    <img src="/icons/cheese.png" className='object-contain w-full h-52' />
+                    <img src={`http://localhost:3000/products/${product.image}`} className='object-contain w-full h-52' />
                 </SwiperSlide>
                 <SwiperSlide className="bg-white">
-                    <img src="/icons/cheese.png" className='object-contain w-full h-52' />
+                    <img src={`http://localhost:3000/products/${product.image}`} className='object-contain w-full h-52' />
                 </SwiperSlide>
                 <SwiperSlide className="bg-white">
-                    <img src="/icons/cheese.png" className='object-contain w-full h-52' />
+                    <img src={`http://localhost:3000/products/${product.image}`} className='object-contain w-full h-52' />
                 </SwiperSlide>
             </Swiper>
             
-            {/* Custom Pagination Buttons - Positioned inside swiper with z-index */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 flex justify-center items-center gap-2">
                 {Array.from({ length: totalSlides }).map((_, index) => (
                     <button
@@ -111,7 +111,7 @@ const Pdp = ({ onClose }: PdpProps) => {
                 <div className="space-y-5 flex-1">
                     {testforspped}
                     <div className="space-y-3">
-                        <div className="text-[#6B6866] text-lg">پنیر فتا دوشه هراز مقدار 300 گرم</div>
+                        <div className="text-[#6B6866] text-lg">{product.name}</div>
                         <div className="grid grid-rows-2 grid-cols-2 gap-4">
                             <div className="bg-white px-2 py-3 rounded-lg space-y-2">
                                 <div className="text-[#979593] text-xs">نوع بسته بندی :</div>
@@ -137,7 +137,9 @@ const Pdp = ({ onClose }: PdpProps) => {
                         <div className="flex justify-between bg-white px-4 py-2 rounded-[10px]">
                             <div className="text-[#65029B] font-bold">قیمت با حامی کارت</div>
                             <div className="text-[#0B8500] text-sm flex items-center gap-1">
-                                <span className="font-bold">۳,0۰۰,۰۰۰</span>
+                                <span className="font-bold">
+                                {(product.price * 0.9).toLocaleString('fa-IR')}
+                                </span>
                                 <span>تومان</span>
                             </div>
 
@@ -179,7 +181,7 @@ const Pdp = ({ onClose }: PdpProps) => {
                         <div className="flex-1 flex flex-col items-end justify-around">
                             <div className="text-[#787471] text-xs">قیمت کالا</div>
                             <div className="text-sm flex items-center gap-1 text-mainColor">
-                                <span className="font-bold text-lg">40,۰۰۰</span>
+                                <span className="font-bold text-lg">{product.price.toLocaleString('fa-IR')}</span>
                                 <span className="text-xs">تومان</span>
                             </div>
                         </div>

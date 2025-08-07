@@ -1,0 +1,58 @@
+import { createContext, useContext, useState, ReactNode } from 'react';
+import type { product } from '../types/type';
+
+interface PdpContextType {
+  isShowPdp: boolean
+  openPdp: (productInp: product) => void;
+  closePdp: () => void;
+  productData: product;
+}
+
+const defaultValue: PdpContextType = {
+  isShowPdp: false,
+  openPdp: (productInp) => {}, 
+  closePdp: () => {},
+  productData: {
+    id: 0,
+    name: '',
+    categoryId: 0,
+    discount: 0,
+    image: '',
+    isSpecial: false,
+    price: 0
+  }
+};
+
+const PdpContext = createContext<PdpContextType>(defaultValue);
+
+interface PdpProviderProps {
+  children: ReactNode;
+}
+
+export function PdpProvider({ children }: PdpProviderProps) {
+  const [isShowPdp, setIsShowPdp] = useState<boolean>(false);
+  const [productData, setProductData] = useState<product | null>(null)
+
+  const openPdp = (product: product) => {
+    setIsShowPdp(true);
+    setProductData(product)
+  }
+  const closePdp = () => setIsShowPdp(false);
+
+  const value = {
+    isShowPdp,
+    openPdp,
+    closePdp,
+    productData
+  };
+
+  return <PdpContext.Provider value={value}>{children}</PdpContext.Provider>;
+}
+
+export function usePdp(): PdpContextType {
+  const context = useContext(PdpContext);
+  if (context === undefined) {
+    throw new Error('usePdp must be used within a PdpProvider');
+  }
+  return context;
+}

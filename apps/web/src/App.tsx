@@ -10,12 +10,13 @@ import { Toaster } from "react-hot-toast"
 import PLP from './pages/plp';
 import Basket from './pages/basket';
 import Orders from './pages/orders';
-
-const queryClient = new QueryClient()
+import { PdpProvider, usePdp } from './context/pdpContext';
+import Pdp from './components/pdp';
 
 function AppContent() {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
+  const { isShowPdp, productData , closePdp } = usePdp();
 
   return (
     <div className='max-w-[400px] mx-auto h-screen relative flex flex-col max-h-screen'>
@@ -29,6 +30,11 @@ function AppContent() {
         <Route path="/orders" element={<Orders />} />
       </Routes>
       {!isLoginPage && <Navbar />}
+      <AnimatePresence>
+        {isShowPdp && (
+          <Pdp  product={productData} onClose={closePdp} />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -37,7 +43,9 @@ function App() {
   return (
     <>
       <Router>
-        <AppContent />
+        <PdpProvider>
+          <AppContent />
+        </PdpProvider>
       </Router>
       <Toaster />
     </>

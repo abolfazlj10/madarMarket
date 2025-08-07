@@ -17,7 +17,6 @@ const PLP = () => {
     const [showPdp, setShowPdp] = useState(false);
     const {id : categoryId} = useParams()
     const { data } = useGetpProductsFromCategory(categoryId)
-    console.log(data)
     return(
         <div className="space-y-3 pb-20">
             {showCategoey ? (
@@ -53,9 +52,6 @@ const PLP = () => {
                     </>
                 )}
             </div>
-            <AnimatePresence>
-                {showPdp && <Pdp onClose={() => setShowPdp(false)} />}
-            </AnimatePresence>
         </div>
     ) }
 export default PLP;

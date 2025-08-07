@@ -4,6 +4,7 @@ import { Pagination } from 'swiper/modules';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import type { product } from "../types/type";
+import { useCart } from "../context/cartContext";
 interface PdpProps {
     onClose: () => void;
     product: product
@@ -11,24 +12,14 @@ interface PdpProps {
 
 const Pdp = ({ onClose, product }: PdpProps) => {
 
+    const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart()
+
+    const itemInCart = cart.find((item) => item.id === product.id);
+    const quantity = itemInCart ? itemInCart.quantity : 0;
+
     const [activeIndex, setActiveIndex] = useState(0);
-    const [productCount, setProductCount] = useState(0);
     const totalSlides = 3; 
     const swiperRef = useRef<any>(null);
-
-    const handleIncreaseCount = () => {
-        setProductCount(prev => prev + 1);
-    };
-
-    const handleDecreaseCount = () => {
-        setProductCount(prev => Math.max(0, prev - 1));
-    };
-
-    const handleAddToBasket = () => {
-        if (productCount === 0) {
-            handleIncreaseCount();
-        }
-    };
 
     const handlePaginationClick = (index: number) => {
         if (swiperRef.current && swiperRef.current.swiper) {
@@ -36,7 +27,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
         }
     };
     
-    const testforspped = (
+    const slide = (
 
         <div className='relative'>
             <Swiper
@@ -76,7 +67,6 @@ const Pdp = ({ onClose, product }: PdpProps) => {
     
     return(
         <>
-            {/* Backdrop */}
             <motion.div
                 className="fixed bg-black/50 z-[98]"
                 style={{ 
@@ -94,7 +84,6 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                 onClick={onClose}
             />
             
-            {/* PDP Content */}
             <motion.div 
                 className="bg-[#FAFAFA] flex flex-col gap-4 justify-between absolute bottom-0 rounded-t-2xl p-3 h-[85%] w-full z-[99]"
                 initial={{ y: "100%" }}
@@ -109,7 +98,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
             >
                 <MdClose className="text-3xl cursor-pointer" onClick={onClose} />
                 <div className="space-y-5 flex-1">
-                    {testforspped}
+                    {slide}
                     <div className="space-y-3">
                         <div className="text-[#6B6866] text-lg">{product.name}</div>
                         <div className="grid grid-rows-2 grid-cols-2 gap-4">
@@ -135,7 +124,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                 <div className="space-y-3">
                     <div className="p-[1px] rounded-[12px] bg-gradient-to-r from-[#D2DD25] via-[#43B999] via-[#02A9EC] via-[#364FC0] to-[#65029B] overflow-hidden">
                         <div className="flex justify-between bg-white px-4 py-2 rounded-[10px]">
-                            <div className="text-[#65029B] font-bold">قیمت با حامی کارت</div>
+                        <div className="text-[#65029B] font-bold">قیمت با حامی کارت</div>
                             <div className="text-[#0B8500] text-sm flex items-center gap-1">
                                 <span className="font-bold">
                                 {(product.price * 0.9).toLocaleString('fa-IR')}
@@ -147,30 +136,24 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                     </div>
                     <div className="flex">
                         <div 
-                            className={`flex-2 ${productCount ? 'bg-white border border-mainColor' : 'bg-mainColor'}  text-white rounded-xl py-3 text-center cursor-pointer flex items-center justify-center gap-2`}
-                            onClick={handleAddToBasket}
+                            className={`flex-2 ${quantity ? 'bg-white border border-mainColor' : 'bg-mainColor'}  text-white rounded-xl py-3 text-center cursor-pointer flex items-center justify-center gap-2`}
+                            onClick={ () => quantity == 0 && addToCart(product)}
                         >
-                            {productCount > 0 ? (
+                            {quantity > 0 ? (
                                 <div className="flex gap-4 items-center">
                                     <div className="flex-1">
                                         <img 
                                             src="/icons/plus.svg" 
                                             className="w-6 cursor-pointer duration-200 hover:scale-110" 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleIncreaseCount();
-                                            }} 
+                                            onClick={() => increaseQuantity(product.id)} 
                                         />
                                     </div>
-                                    <div className="flex-1 text-mainColor flex items-center justify-center text-lg">{productCount}</div>
+                                    <div className="flex-1 text-mainColor flex items-center justify-center text-lg">{quantity}</div>
                                     <div className="flex-1">
                                         <img 
                                             src="/icons/trash.svg" 
                                             className="w-6 cursor-pointer duration-200 hover:scale-110" 
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleDecreaseCount();
-                                            }} 
+                                            onClick={() => decreaseQuantity(product.id)} 
                                         />
                                     </div>
                                 </div>

@@ -20,3 +20,4 @@ export type tag = {
     category: categories
 }
 export type CartItem = product & { quantity: number };
+export type typeFilterType = 'hami' | 'discount' | null

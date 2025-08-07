@@ -5,7 +5,7 @@ interface PdpContextType {
   isShowPdp: boolean
   openPdp: (productInp: product) => void;
   closePdp: () => void;
-  productData: product;
+  productData: product | null;
 }
 
 const defaultValue: PdpContextType = {

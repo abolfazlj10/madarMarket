@@ -19,7 +19,7 @@ const ProudctItem = ({ productDetail,index} : INPproductItem) => {
     const NormalProduct = () => (
         <>
             <div className="cursor-pointer" onClick={() => openPdp(productDetail)}>
-                <img src={`http://localhost:3000/products/${productDetail?.image}`} className="w-20" />
+                <img src={`http://localhost:3000/products/${productDetail?.image}`} className="w-20 group-hover/productItem:scale-110 duration-300" />
             </div>
             <div className="flex-1 flex flex-col gap-3">
                 <div className="text-[#787471] text-sm flex-1 cursor-pointer" onClick={() => openPdp(productDetail)}>{productDetail?.name}</div>
@@ -72,7 +72,7 @@ const ProudctItem = ({ productDetail,index} : INPproductItem) => {
     return(
         index == 0 ? (
             <>
-                <div className="flex px-2 pt-2 gap-4">
+                <div className="flex px-2 pt-2 gap-4 group/productItem">
                     <NormalProduct />
                 </div>
                 <div className="bg-[#FFEDE5] flex justify-between py-2 px-4">

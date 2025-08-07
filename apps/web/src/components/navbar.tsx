@@ -74,7 +74,7 @@ const Navbar = () => {
                         className={`relative items-center space-y-1 cursor-pointer transition-colors duration-300 ${activeItem === item.index ? 'text-mainColor' : 'text-[#B3B2B2]'} hover:text-mainColor`}>
                             <IconComponent className="text-xl mx-auto" />
                             <div className="text-xs">{item.text}</div>
-                            {(item.index == 1 && cart.length != 0) && <div className="absolute -top-2 bg-mainColor rounded-full w-4 h-4 text-xs flex justify-center items-center text-white">{cart.length}</div>}
+                            {(item.index == 1 && cart?.length != 0) && <div className="absolute -top-2 bg-mainColor rounded-full w-4 h-4 text-xs flex justify-center items-center text-white">{cart.length}</div>}
                     </Link>
                 );
             })}

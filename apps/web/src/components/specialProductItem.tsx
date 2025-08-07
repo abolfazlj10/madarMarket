@@ -1,5 +1,7 @@
+import { usePdp } from "../context/pdpContext";
 import { useCart } from "../context/cartContext";
 const SpecialProductsItem = ({ product }: { product?: any }) => {
+  const { openPdp } = usePdp()
   const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart()
     const finalPrice = product.discount
       ? Math.round(product.price * (1 - product.discount / 100))
@@ -10,9 +12,11 @@ const SpecialProductsItem = ({ product }: { product?: any }) => {
       const quantity = itemInCart ? itemInCart.quantity : 0;
   
     return (
-      <div className="border border-[#F5F2EF] rounded-b-3xl rounded-t-xl space-y-1 overflow-hidden w-[200px] !flex-1 grid grid-rows-[2fr_auto_auto_auto]">
-        <img src={`http://localhost:3000/products/${product.image}`} className="mx-auto w-36" />
-        <div className="px-2 truncate">{product.name}</div>
+      <div className="border border-[#F5F2EF] rounded-b-3xl rounded-t-xl space-y-1 overflow-hidden w-[200px] !flex-1 grid grid-rows-[2fr_auto_auto_auto] group">
+        <div className="mx-auto overflow-hidden">
+          <img onClick={() => openPdp(product)} src={`http://localhost:3000/products/${product.image}`} className="w-36 cursor-pointer group-hover:scale-110 duration-300" />
+        </div>
+        <div onClick={() => openPdp(product)} className="px-2 truncate cursor-pointer">{product.name}</div>
   
         <div className="px-2">
           {product.discount ? (

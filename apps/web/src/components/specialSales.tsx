@@ -11,7 +11,7 @@ const SpecialSales = () => {
     useEffect(() => {
         const savedTimer = localStorage.getItem('specialSalesTimer');
         if (savedTimer) {
-            const { hours, minutes, seconds, endTime } = JSON.parse(savedTimer);
+            const { endTime } = JSON.parse(savedTimer);
             const now = Date.now();
             const timeDiff = endTime - now;
             

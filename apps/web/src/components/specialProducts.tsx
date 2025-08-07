@@ -1,9 +1,7 @@
 import SpecialProductsItem from "./specialProductItem"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation } from 'swiper/modules'
-import data from "../data.json"
 import { useGetSpecialProducts } from "../hooks/useProduct"
-import type { product } from "../types/type"
 
 const SpecialProducts = () => {
     const { data: specialProduct } = useGetSpecialProducts()

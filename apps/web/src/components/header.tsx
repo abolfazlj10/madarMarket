@@ -1,6 +1,5 @@
 
 import { RiShoppingBasket2Line } from "react-icons/ri";
-import { BsSearch } from "react-icons/bs";
 import { GoChevronRight } from "react-icons/go";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCart } from '../context/cartContext'
@@ -9,7 +8,7 @@ import { CgProfile } from "react-icons/cg";
 const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const shouldHideSearch = location.pathname === '/' || location.pathname === '/login';
+    // const shouldHideSearch = location.pathname === '/' || location.pathname === '/login';
     const shouldHideBasket = location.pathname === '/login';
     const shouldHideLogo = location.pathname === '/login';
     const { cart } = useCart()
@@ -28,7 +27,7 @@ const Header = () => {
                     onClick={handleGoBack}
                 />
                 {!shouldHideLogo && (
-                    <img src="/logo/madaMarketLogoText.svg" alt="logo text" />
+                    <Link to="/"><img src="/logo/madaMarketLogoText.svg" alt="logo text" /></Link>
                 )}
             </div>
             <div className="flex-1 flex justify-end items-center gap-2">

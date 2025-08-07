@@ -15,7 +15,7 @@ const Products = () => {
                         <CategoryItem key={index} id={category.id} title={category.name} image={category.image} />
                     ))
                 ) : (
-                    ["","","","","","","","","","","","","","","",""].map((item,idx:number) => (
+                    ["","","","","","","","","","","","","","","",""].map((_,idx:number) => (
                         <div key={idx} className="space-y-2">
                             <div className="skeleton h-20"></div>
                             <div className="skeleton h-4"></div>

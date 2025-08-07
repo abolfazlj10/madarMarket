@@ -1,16 +1,16 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 import type { product } from '../types/type';
 
 interface PdpContextType {
-  isShowPdp: boolean
+  isShowPdp: boolean;
   openPdp: (productInp: product) => void;
   closePdp: () => void;
-  productData: product | null;
+  productData: product | null ;
 }
 
 const defaultValue: PdpContextType = {
   isShowPdp: false,
-  openPdp: (productInp) => {}, 
+  openPdp: () => {}, 
   closePdp: () => {},
   productData: {
     id: 0,
@@ -18,12 +18,13 @@ const defaultValue: PdpContextType = {
     categoryId: 0,
     discount: 0,
     image: '',
+    isWithHami: false,
     isSpecial: false,
     price: 0
   }
 };
 
-const PdpContext = createContext<PdpContextType>(defaultValue);
+const PdpContext = createContext(defaultValue);
 
 interface PdpProviderProps {
   children: ReactNode;

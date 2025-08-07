@@ -11,7 +11,7 @@ const CategoryList = () => {
   const { id: categoryId } = useParams();
   const numericCategoryId = categoryId ? parseInt(categoryId, 10) : -1;
 
-  const swiperRef = useRef<SwiperCore>();
+  const swiperRef = useRef<SwiperCore>(null);
 
   useEffect(() => {
     if (data && swiperRef.current) {

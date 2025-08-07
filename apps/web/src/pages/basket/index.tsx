@@ -1,12 +1,10 @@
-import { useCart } from "../../context/cartContext"; // مطمئن شوید مسیر context درست است
-import { FaHeart, FaBookmark } from "react-icons/fa";
+import { useCart } from "../../context/cartContext";
 import type { product } from "../../types/type"; 
 import ProudctItem from "../../components/productItem";
-import { useState } from "react";
 
 
 const Basket = () => {
-  const { cart, increaseQuantity, decreaseQuantity } = useCart();
+  const { cart } = useCart();
   return(
     <div className="flex-1 py-4">
       <div className="text-center text-3xl text-mainColor font-bold pb-3">سبد خرید</div>

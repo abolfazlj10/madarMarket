@@ -10,7 +10,7 @@ import { useCart } from "../context/cartContext";
 const Navbar = () => {
     const [activeItem, setActiveItem] = useState(0);
     const [indicatorPosition, setIndicatorPosition] = useState(0);
-    const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
     const location = useLocation()
     const { cart } = useCart()
 

@@ -3,14 +3,13 @@ import SwiperBanner from "../../components/swiperBanner";
 import SpecialSales from '../../components/specialSales'
 import Products from "../../components/products";
 import SpecialProducts from "../../components/specialProducts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearch } from "../../hooks/useSearch";
 import type { product } from "../../types/type";
 import ProudctItem from "../../components/productItem";
 
 const Home = () => {
     const [valueSearch,setValueSearch] = useState<string>('')
-    const [ showPdp,setShopPdp ] = useState<boolean>(false)
     const { data: productsSearch = [] } = useSearch(valueSearch) 
     return (
         <div className="h-full space-y-2 pt-3">

@@ -97,7 +97,7 @@ const Login = () => {
         })
     }
 
-    const { register: registerOTP, handleSubmit: handleSubmitOTP, setValue, trigger,reset, watch, formState: { errors: errorsOTP, isValid: isValidOTP }} = useForm<InputsOTP>({
+    const { handleSubmit: handleSubmitOTP, setValue, trigger, formState: {isValid: isValidOTP }} = useForm<InputsOTP>({
         mode: "onChange",
         defaultValues: { otp: "" },
         resolver: (values) => {

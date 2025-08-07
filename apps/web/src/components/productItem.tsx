@@ -7,7 +7,7 @@ interface INPproductItem {
     index: number
 }
 
-const ProudctItem = ({ productDetail,index} : INPproductItem) => {
+const ProudctItem = ({ productDetail} : INPproductItem) => {
     const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart()
     const {openPdp} = usePdp()
 

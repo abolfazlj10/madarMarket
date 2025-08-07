@@ -23,7 +23,7 @@ const UserContext = createContext<UserContextType>({
 export const useUser = () => useContext(UserContext);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, isLoading, isError, refetch } = isLoginUser();
+  const { data, isLoading, refetch } = isLoginUser();
   const logout = () => {
     localStorage.removeItem('tokenMarket');
   };

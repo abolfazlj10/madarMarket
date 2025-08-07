@@ -7,14 +7,16 @@ import type { product } from "../types/type";
 import { useCart } from "../context/cartContext";
 interface PdpProps {
     onClose: () => void;
-    product: product
+    product: product | null
 }
 
 const Pdp = ({ onClose, product }: PdpProps) => {
+    if (!product) return null;
+
 
     const { cart, addToCart, increaseQuantity, decreaseQuantity } = useCart()
 
-    const itemInCart = cart.find((item) => item.id === product.id);
+    const itemInCart = cart.find((item) => item.id === product?.id);
     const quantity = itemInCart ? itemInCart.quantity : 0;
 
     const [activeIndex, setActiveIndex] = useState(0);
@@ -39,13 +41,13 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                 className="mySwiper h-full border-2 border-white rounded-xl"
             >
                 <SwiperSlide className="bg-white">
-                    <img src={`http://localhost:3000/products/${product.image}`} className='object-contain w-full h-52' />
+                    <img src={`http://localhost:3000/products/${product?.image}`} className='object-contain w-full h-52' />
                 </SwiperSlide>
                 <SwiperSlide className="bg-white">
-                    <img src={`http://localhost:3000/products/${product.image}`} className='object-contain w-full h-52' />
+                    <img src={`http://localhost:3000/products/${product?.image}`} className='object-contain w-full h-52' />
                 </SwiperSlide>
                 <SwiperSlide className="bg-white">
-                    <img src={`http://localhost:3000/products/${product.image}`} className='object-contain w-full h-52' />
+                    <img src={`http://localhost:3000/products/${product?.image}`} className='object-contain w-full h-52' />
                 </SwiperSlide>
             </Swiper>
             
@@ -100,7 +102,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                 <div className="space-y-5 flex-1">
                     {slide}
                     <div className="space-y-3">
-                        <div className="text-[#6B6866] text-lg">{product.name}</div>
+                        <div className="text-[#6B6866] text-lg">{product?.name}</div>
                         <div className="grid grid-rows-2 grid-cols-2 gap-4">
                             <div className="bg-white px-2 py-3 rounded-lg space-y-2">
                                 <div className="text-[#979593] text-xs">نوع بسته بندی :</div>
@@ -127,7 +129,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                         <div className="text-[#65029B] font-bold">قیمت با حامی کارت</div>
                             <div className="text-[#0B8500] text-sm flex items-center gap-1">
                                 <span className="font-bold">
-                                {(product.price * 0.9).toLocaleString('fa-IR')}
+                                {(product?.price * 0.9).toLocaleString('fa-IR')}
                                 </span>
                                 <span>تومان</span>
                             </div>
@@ -145,7 +147,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                                         <img 
                                             src="/icons/plus.svg" 
                                             className="w-6 cursor-pointer duration-200 hover:scale-110" 
-                                            onClick={() => increaseQuantity(product.id)} 
+                                            onClick={() => increaseQuantity(product?.id)} 
                                         />
                                     </div>
                                     <div className="flex-1 text-mainColor flex items-center justify-center text-lg">{quantity}</div>
@@ -153,7 +155,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                                         <img 
                                             src="/icons/trash.svg" 
                                             className="w-6 cursor-pointer duration-200 hover:scale-110" 
-                                            onClick={() => decreaseQuantity(product.id)} 
+                                            onClick={() => decreaseQuantity(product?.id)} 
                                         />
                                     </div>
                                 </div>
@@ -164,7 +166,7 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                         <div className="flex-1 flex flex-col items-end justify-around">
                             <div className="text-[#787471] text-xs">قیمت کالا</div>
                             <div className="text-sm flex items-center gap-1 text-mainColor">
-                                <span className="font-bold text-lg">{product.price.toLocaleString('fa-IR')}</span>
+                                <span className="font-bold text-lg">{product?.price.toLocaleString('fa-IR')}</span>
                                 <span className="text-xs">تومان</span>
                             </div>
                         </div>

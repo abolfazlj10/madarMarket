@@ -18,7 +18,7 @@ function AppContent() {
   const { isShowPdp, productData , closePdp } = usePdp();
 
   return (
-    <div className='max-w-[400px] mx-auto h-screen relative flex flex-col max-h-screen max-[420px]:px-2'>
+    <div className='max-w-[400px] mx-auto h-dvh relative flex flex-col max-h-dvh max-[420px]:px-2'>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

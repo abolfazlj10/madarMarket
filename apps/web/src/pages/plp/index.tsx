@@ -1,12 +1,10 @@
 
 import CategoryList from "../../components/categoryList";
-import Pdp from "../../components/pdp";
 import PlpFilter from "../../components/plpFilter";
 import SpecialSales from "../../components/specialSales";
 import Tags from "../../components/tags";
 import { useGetpProductsFromCategory } from "../../hooks/useProduct";
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { useParams } from "react-router-dom";
 import type { product } from "../../types/type";
 import ProudctItem from "../../components/productItem";
@@ -14,7 +12,6 @@ import ProudctItem from "../../components/productItem";
 const showCategoey = true
 
 const PLP = () => {
-    const [showPdp, setShowPdp] = useState(false);
     const {id : categoryId} = useParams()
     const { data } = useGetpProductsFromCategory(categoryId)
     return(
@@ -31,7 +28,7 @@ const PLP = () => {
             <div className="space-y-3">
                 {data ? (
                     data?.map((item: product,idx:number)=>(
-                        <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg group/productItem ${idx == 0 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
+                        <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg group/productItem ${item.isWithHami ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
                             <ProudctItem productDetail={item} index={idx} />
                         </div>
                     ))

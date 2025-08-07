@@ -29,6 +29,7 @@ model product {
   price      Int
   discount   Int
   isSpecial  Boolean  @default(false)
+  isWithHami Boolean @default(false)
   categoryId Int
   category   Category @relation(fields: [categoryId], references: [id])
 }

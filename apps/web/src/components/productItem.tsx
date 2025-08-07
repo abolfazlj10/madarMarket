@@ -70,7 +70,7 @@ const ProudctItem = ({ productDetail,index} : INPproductItem) => {
         </>
     )
     return(
-        index == 0 ? (
+        productDetail.isWithHami ? (
             <>
                 <div className="flex px-2 pt-2 gap-4 group/productItem">
                     <NormalProduct />

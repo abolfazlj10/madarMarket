@@ -17,8 +17,7 @@ const PLP = () => {
     const [showPdp, setShowPdp] = useState(false);
     const {id : categoryId} = useParams()
     const { data } = useGetpProductsFromCategory(categoryId)
-    
-
+    console.log(data)
     return(
         <div className="space-y-3 pb-20">
             {showCategoey ? (

@@ -1,11 +1,14 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { product, CartItem } from '../types/type';
+import toast from "react-hot-toast";
+import moment from "jalali-moment";
 
 type CartContextType = {
   cart: CartItem[];
   addToCart: (item: product) => void;
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
+  submitOrder: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -58,9 +61,28 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     updateCartAndStorage(newCart);
   };
 
+  const submitOrder = () => {
+    const orders = localStorage.getItem('orderMadarmarket')
+    if(orders){
+      const ordersParse = JSON.parse(orders)
+      const orderStructure = {
+        id: ordersParse.length + 1,
+        orders: cart,
+        date: moment().locale('fa').format('YYYY/MM/DD')
+      }
+      console.log(orderStructure)
+    }
+    // setCart([])
+    // localStorage.setItem('basketCartMadarMarket', JSON.stringify([]))
+    // toast.success('سفارش شما با موفقیت ثبت شد.')
+  }
+  useEffect(()=>{
+    submitOrder()
+  },[])
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, increaseQuantity, decreaseQuantity }}
+      value={{ cart, addToCart, increaseQuantity, decreaseQuantity, submitOrder }}
     >
       {children}
     </CartContext.Provider>

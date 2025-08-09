@@ -19,5 +19,11 @@ export type tag = {
     categoryId: number
     category: categories
 }
+export type order = {
+    id: number
+    orders: product[]
+    date: string
+    status: 'deliverd'
+}
 export type CartItem = product & { quantity: number };
 export type typeFilterType = 'hami' | 'discount' | null

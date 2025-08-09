@@ -16,7 +16,6 @@ const SpecialSales = () => {
             const timeDiff = endTime - now;
             
             if (timeDiff > 0) {
-                // Timer is still running
                 const remainingHours = Math.floor(timeDiff / (1000 * 60 * 60));
                 const remainingMinutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                 const remainingSeconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
@@ -27,9 +26,8 @@ const SpecialSales = () => {
                     seconds: remainingSeconds
                 });
             } else {
-                // Timer finished, reset to initial time
                 const initialTime = { hours: 23, minutes: 0, seconds: 0 };
-                const endTime = now + (23 * 60 * 60 * 1000); // 23 hours from now
+                const endTime = now + (23 * 60 * 60 * 1000); 
                 localStorage.setItem('specialSalesTimer', JSON.stringify({
                     ...initialTime,
                     endTime
@@ -37,9 +35,8 @@ const SpecialSales = () => {
                 setTimeLeft(initialTime);
             }
         } else {
-            // First time, set initial timer
             const initialTime = { hours: 23, minutes: 0, seconds: 0 };
-            const endTime = Date.now() + (23 * 60 * 60 * 1000); // 23 hours from now
+            const endTime = Date.now() + (23 * 60 * 60 * 1000); 
             localStorage.setItem('specialSalesTimer', JSON.stringify({
                 ...initialTime,
                 endTime
@@ -105,7 +102,7 @@ const SpecialSales = () => {
                     </div>
                 </div>
             </div>
-            <div className="flex gap-2 items-center text-sm text-redBg">
+            <div className="flex gap-2 items-center text-sm font-mono text-redBg">
                 <div className="bg-[#FA2C37] rounded font-semibold text-white px-2 py-1 text-base overflow-hidden">
                     <span className="countdown leading-none">
                         <span 

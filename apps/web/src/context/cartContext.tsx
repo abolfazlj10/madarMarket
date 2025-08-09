@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import type { product, CartItem } from '../types/type';
+import type { product, CartItem, order } from '../types/type';
 import toast from "react-hot-toast";
 import moment from "jalali-moment";
 
@@ -65,20 +65,29 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const orders = localStorage.getItem('orderMadarmarket')
     if(orders){
       const ordersParse = JSON.parse(orders)
-      const orderStructure = {
+      const orderStructure : order = {
         id: ordersParse.length + 1,
         orders: cart,
-        date: moment().locale('fa').format('YYYY/MM/DD')
+        date: moment().locale('fa').format('YYYY/MM/DD'),
+        status: 'deliverd'
       }
-      console.log(orderStructure)
+      ordersParse.push(orderStructure)
+      localStorage.setItem('orderMadarmarket', JSON.stringify(ordersParse))
+    }else{
+      const ordersArray = []
+      const orderStructure : order = {
+        id: 1,
+        orders: cart,
+        date: moment().locale('fa').format('YYYY/MM/DD'),
+        status: 'deliverd'
+      }
+      ordersArray.push(orderStructure)
+      localStorage.setItem('orderMadarmarket', JSON.stringify(ordersArray))
     }
-    // setCart([])
-    // localStorage.setItem('basketCartMadarMarket', JSON.stringify([]))
-    // toast.success('سفارش شما با موفقیت ثبت شد.')
+    setCart([])
+    localStorage.setItem('basketCartMadarMarket', JSON.stringify([]))
+    toast.success('سفارش شما با موفقیت ثبت شد.')
   }
-  useEffect(()=>{
-    submitOrder()
-  },[])
 
   return (
     <CartContext.Provider

@@ -1,5 +1,5 @@
-import { createContext, useContext, useState, type ReactNode, useEffect } from "react";
-import type { product, CartItem } from '../types/type'
+import { createContext, useContext, useState, type ReactNode } from "react";
+import type { product, CartItem } from '../types/type';
 
 type CartContextType = {
   cart: CartItem[];
@@ -10,46 +10,53 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+const CART_STORAGE_KEY = 'basketCartMadarMarket';
+
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>(() => {
-    const savedCart = localStorage.getItem('basketCartMadarMarket');
-    const parsed = savedCart ? JSON.parse(savedCart) : [];
-    return parsed;
+    try {
+      const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error("Failed to parse cart from localStorage", error);
+      return [];
+    }
   });
 
+  const updateCartAndStorage = (newCart: CartItem[]) => {
+    setCart(newCart);
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(newCart));
+  };
+
   const addToCart = (item: product) => {
-    setCart((prev) => {
-      const existing = prev.find((p) => p.id === item.id);
-      if (existing) {
-        return prev.map((p) =>
-          p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
-        );
-      }
-      return [...prev, { ...item, quantity: 1 }];
-    });
+    const existing = cart.find((p) => p.id === item.id);
+    let newCart: CartItem[];
+
+    if (existing) {
+      newCart = cart.map((p) =>
+        p.id === item.id ? { ...p, quantity: p.quantity + 1 } : p
+      );
+    } else {
+      newCart = [...cart, { ...item, quantity: 1 }];
+    }
+    updateCartAndStorage(newCart);
   };
 
   const increaseQuantity = (id: number) => {
-    setCart((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, quantity: p.quantity + 1 } : p))
+    const newCart = cart.map((p) =>
+      p.id === id ? { ...p, quantity: p.quantity + 1 } : p
     );
+    updateCartAndStorage(newCart);
   };
 
   const decreaseQuantity = (id: number) => {
-    setCart((prev) =>
-      prev
-        .map((p) =>
-          p.id === id ? { ...p, quantity: p.quantity - 1 } : p
-        )
-        .filter((p) => p.quantity > 0)
-    );
+    const newCart = cart
+      .map((p) =>
+        p.id === id ? { ...p, quantity: p.quantity - 1 } : p
+      )
+      .filter((p) => p.quantity > 0);
+    updateCartAndStorage(newCart);
   };
-
-  useEffect(()=>{
-    if(cart?.length != 0){
-      localStorage.setItem('basketCartMadarMarket', JSON.stringify(cart))
-    }
-  },[cart])
 
   return (
     <CartContext.Provider

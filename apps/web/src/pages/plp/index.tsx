@@ -31,7 +31,7 @@ const PLP = () => {
                     data.filter(item => {
                     if (filterType === "hami") return item.isWithHami;
                     if (filterType === "discount") return item.discount;
-                    return true; // اگر فیلتر وجود ندارد، همه آیتم‌ها را نشان بده
+                    return true; 
                     }).length === 0 ? (
                     <p className="text-center text-gray-500 mt-10">محصولی یافت نشد.</p>
                     ) : (
@@ -42,15 +42,8 @@ const PLP = () => {
                         filterType == null
                         ) {
                         return (
-                            <div
-                            key={idx}
-                            className={`flex border border-[#F5F2EF] rounded-lg group/productItem ${
-                                item.isWithHami
-                                ? "flex-col overflow-hidden gap-3"
-                                : "px-2 py-2 gap-4"
-                            }`}
-                            >
-                            <ProudctItem productDetail={item} index={idx} />
+                            <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg group/productItem ${item.isWithHami? "flex-col overflow-hidden gap-3" : "px-2 py-2 gap-4"}`}>
+                                <ProudctItem productDetail={item} index={idx} />
                             </div>
                         );
                         }
@@ -58,7 +51,6 @@ const PLP = () => {
                     })
                     )
                 ) : (
-                    // skeleton loading
                     <>
                     {["", "", ""].map((_, idx) => (
                         <div

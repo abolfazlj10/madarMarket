@@ -23,7 +23,7 @@ const Home = () => {
                 </>
             ):(
                 productsSearch.map((item: product,idx: number)=>(
-                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg group/productItem ${idx == 0 ? 'flex-col overflow-hidden gap-3' : 'px-2 py-2 gap-4'}`}>
+                    <div key={idx} className={`flex border border-[#F5F2EF] rounded-lg group/productItem ${item.isWithHami? "flex-col overflow-hidden gap-3" : "px-2 py-2 gap-4"}`}>
                         <ProudctItem productDetail={item} index={idx} />
                     </div>
                 ))

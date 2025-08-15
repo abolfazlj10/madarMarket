@@ -42,13 +42,8 @@ const Header = () => {
                         </div>
                     </Link>
                 )}
-                {/* {!shouldHideSearch && (
-                    <div className="border border-secondary p-3 rounded-xl cursor-pointer group/search hover:bg-secondary">
-                        <BsSearch className="text-iconColor text-lg group-hover/search:text-black duration-300"/>
-                    </div>
-                )} */}
                 {!shouldHideLogo && (
-                    <Link to='/login' className="border border-secondary p-3 rounded-xl cursor-pointer group/search hover:bg-secondary">
+                    <Link to='/login' className="border border-secondary p-3 rounded-xl cursor-pointer group/search hover:bg-secondary duration-300">
                         <CgProfile className="text-iconColor text-lg group-hover/search:text-black duration-300"/>
                     </Link>
                 )}

@@ -31,7 +31,7 @@ function AppContent() {
       {!isLoginPage && <Navbar />}
       <AnimatePresence>
         {isShowPdp && (
-          <Pdp  product={productData} onClose={closePdp} />
+          <Pdp product={productData} onClose={closePdp} />
         )}
       </AnimatePresence>
     </div>

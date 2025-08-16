@@ -1,6 +1,6 @@
 
 import CategoryList from "../../components/categoryList";
-import PlpFilter from "../../components/plpFilter";
+// import PlpFilter from "../../components/plpFilter";
 import SpecialSales from "../../components/specialSales";
 import Tags from "../../components/tags";
 import { useGetpProductsFromCategory } from "../../hooks/useProduct";
@@ -14,7 +14,7 @@ const showCategoey = true
 const PLP = () => {
     const {id : categoryId} = useParams()
     const { data } = useGetpProductsFromCategory(categoryId)
-    const [filterType,setFilterType] = useState<typeFilterType>(null)
+    const [filterType] = useState<typeFilterType>(null)
     return(
         <div className="space-y-3 pb-20">
             {showCategoey ? (
@@ -25,7 +25,7 @@ const PLP = () => {
             ) : (
                 <SpecialSales />
             )}
-            <PlpFilter filterType={filterType} setFilterType={setFilterType} />
+            {/* <PlpFilter filterType={filterType} setFilterType={setFilterType} /> */}
             <div className="space-y-3">
                 {data ? (
                     data.filter(item => {

@@ -25,7 +25,7 @@ const CategoryList = () => {
   return (
     <div className="flex gap-1 mt-5">
       <Swiper
-        slidesPerView={4}
+        slidesPerView={5}
         spaceBetween={30}
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         className="mySwiper cursor-pointer"

@@ -4,7 +4,7 @@ import { useGetCategories } from "../hooks/useCategory"
 const Products = () => {
     const { data } = useGetCategories();
     return (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-5 mt-5">
             <div className="flex justify-between items-center">
                 <div className="text-[#BA400B] font-bold text-xl">دسته بندی‌ها</div>
                 <div className="text-[#C15323] text-sm">انتخاب سریع محصولات</div>

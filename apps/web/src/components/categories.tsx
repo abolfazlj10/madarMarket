@@ -17,8 +17,8 @@ const Products = () => {
                 ) : (
                     ["","","","","","","","","","","","","","","",""].map((_,idx:number) => (
                         <div key={idx} className="space-y-2">
-                            <div className="skeleton h-20"></div>
-                            <div className="skeleton h-4"></div>
+                            <div className="skeleton h-25"></div>
+                            <div className="skeleton h-6"></div>
                         </div>
                     ))
                 )}

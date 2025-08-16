@@ -1,6 +1,6 @@
 import Search from "../../components/search";
 import SpecialSales from '../../components/specialSales'
-import Products from "../../components/products";
+import Products from "../../components/categories";
 import SpecialProducts from "../../components/specialProducts";
 import { useState } from "react";
 import { useSearch } from "../../hooks/useSearch";

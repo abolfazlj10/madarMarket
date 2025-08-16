@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import type { product, CartItem, order } from '../types/type';
 import toast from "react-hot-toast";
 import moment from "jalali-moment";

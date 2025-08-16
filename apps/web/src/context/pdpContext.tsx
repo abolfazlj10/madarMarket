@@ -20,7 +20,8 @@ const defaultValue: PdpContextType = {
     image: '',
     isWithHami: false,
     isSpecial: false,
-    price: 0
+    price: 0,
+    quantity: 0,
   }
 };
 

@@ -85,7 +85,6 @@ const Pdp = ({ onClose, product }: PdpProps) => {
                 transition={{ duration: 0.3 }}
                 onClick={onClose}
             />
-            
             <motion.div 
                 className="bg-[#FAFAFA] flex flex-col gap-4 justify-between fixed bottom-0 rounded-t-2xl p-3 h-[85%] w-[500px] z-[99]"
                 initial={{ y: "100%" }}

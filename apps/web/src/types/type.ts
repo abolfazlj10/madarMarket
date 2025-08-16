@@ -12,6 +12,7 @@ export type product = {
     isSpecial: boolean
     isWithHami: boolean
     categoryId: number
+    quantity: number
 }
 export type tag = {
     id: number

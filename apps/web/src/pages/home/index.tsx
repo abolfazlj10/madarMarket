@@ -1,5 +1,4 @@
 import Search from "../../components/search";
-import SwiperBanner from "../../components/swiperBanner";
 import SpecialSales from '../../components/specialSales'
 import Products from "../../components/products";
 import SpecialProducts from "../../components/specialProducts";

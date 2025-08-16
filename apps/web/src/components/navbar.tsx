@@ -52,7 +52,7 @@ const Navbar = () => {
     ];
 
     return (
-        <div className="max-w-[400px] w-full fixed bottom-0 flex justify-between bg-white border rounded-t-lg border-secondary py-3 px-5 z-80">
+        <div className="max-w-[500px] w-full fixed bottom-0 flex justify-between bg-white border rounded-t-lg border-secondary py-3 px-5 z-80">
             <img 
                 src="/icons/navbarItem.svg" 
                 className="absolute top-0 transition-all duration-300 ease-in-out pointer-events-none" 

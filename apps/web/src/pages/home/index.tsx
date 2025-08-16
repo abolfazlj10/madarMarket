@@ -16,7 +16,8 @@ const Home = () => {
             <Search searchValue={valueSearch} setSearchValue={setValueSearch} />
             {valueSearch?.length == 0 ? (
                 <>
-                    <SwiperBanner />
+                    {/* <SwiperBanner /> */}
+                    <img className="rounded-lg mt-3" src="./icons/DphMarketSlider.b7cf000b766b31b9c1c0f95dfdf19d80.png" alt="banner delivery" />
                     <SpecialSales />
                     <Products />
                     <SpecialProducts />
